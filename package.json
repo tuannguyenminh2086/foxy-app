@@ -1,0 +1,45 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "tauri": "tauri"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "latest",
+    "@nuxt/fonts": "^0.7.0",
+    "@nuxtjs/tailwindcss": "^6.12.0",
+    "@pinia/nuxt": "^0.5.1",
+    "@sidebase/nuxt-auth": "^0.7.2",
+    "@tauri-apps/cli": "^1.5.13",
+    "@vee-validate/nuxt": "^4.13.1",
+    "@vueuse/nuxt": "^10.11.0",
+    "nuxt": "^3.11.2",
+    "shadcn-nuxt": "^0.10.4",
+    "typescript": "^5.5.2",
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^1.5.4",
+    "@vee-validate/zod": "^4.13.1",
+    "@vueuse/core": "^10.11.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "lucide-vue-next": "^0.396.0",
+    "next-auth": "4.22.5",
+    "pinia": "^2.1.7",
+    "pinia-plugin-persistedstate-2": "^2.0.19",
+    "radix-vue": "^1.8.4",
+    "tailwind-merge": "^2.3.0",
+    "tailwindcss-animate": "^1.0.7",
+    "vee-validate": "^4.13.1",
+    "zod": "^3.23.8"
+  },
+  "peerDependencies": {}
+}
