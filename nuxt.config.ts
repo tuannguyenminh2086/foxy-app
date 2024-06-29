@@ -4,7 +4,7 @@ export default defineNuxtConfig({
 	devtools: { enabled: true },
 
 	// SSR must be turned off
-	// ssr: false,
+	ssr: false,
 
 	modules: [
         "@nuxtjs/tailwindcss",

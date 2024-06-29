@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="text-2xl font-bold">Authenticated</h1>
+    <h1 class="text-2xl font-bold">{{ status }}</h1>
   </div>
 </template>
 
@@ -8,8 +8,13 @@
 definePageMeta({ middleware: 'auth' })
 export default {
   setup () {
-  
-    return {}
+    const { status, data } = useAuth();
+    console.log(data.value);
+
+
+    return {
+      status
+    }
   }
 }
 </script>
