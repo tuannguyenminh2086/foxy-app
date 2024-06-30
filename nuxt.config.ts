@@ -10,10 +10,12 @@ export default defineNuxtConfig({
         "@nuxtjs/tailwindcss",
         "shadcn-nuxt",
         "@pinia/nuxt",
+        '@pinia-plugin-persistedstate/nuxt',
         "@vueuse/nuxt",
         "@vee-validate/nuxt",
         "@nuxt/fonts",
-        "@sidebase/nuxt-auth"
+        "@sidebase/nuxt-auth",
+        "@nuxt/image"
     ],
 	shadcn: {
 			prefix: '',

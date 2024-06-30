@@ -1,5 +1,8 @@
 <template>
   <div class="flex flex-col justify-center items-center ">
+      <div>
+        <NuxtImg src="/assets/img/icon.png" width="40" height="40" />
+      </div>
       <h1 class="mb-10 text-3xl font-semibold">Sign in</h1>
 
       <form class="w-full max-w-[400px] space-y-6" @submit="onSubmit">
@@ -47,17 +50,6 @@
   import { useForm } from 'vee-validate'
   import { toTypedSchema } from '@vee-validate/zod'
   import * as z from 'zod'
-  import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  } from "@/components/ui/form";
-  import { Input } from "@/components/ui/input";
-  import { Button } from "@/components/ui/button";
-  import { toast } from "@/components/ui/toast";
-
 
   const { signIn } = useAuth()
 
