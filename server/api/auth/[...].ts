@@ -10,6 +10,27 @@ export default NuxtAuthHandler({
     // Change the default behavior to use `/login` as the path for the sign-in page
     signIn: '/login'
   },
+  callbacks: {
+    async jwt ({ token, user }: any) {
+      if (user) {
+
+        let _name = user.first_name  + ' ' + user.last_name;
+
+        token.user = {
+            ...user,
+            name: _name,
+            image: user.avatar
+          }
+
+
+      }
+      return token
+    },
+    async session({ session, user, token }: any) {
+      session.user = token.user;
+      return session;
+    }
+  },
   providers: [
     // @ts-expect-error Import is exported on .default during SSR, so we need to call it this way. May be fixed via Vite at some point
     CredentialsProvider.default({
@@ -18,11 +39,7 @@ export default NuxtAuthHandler({
         username: { label: 'Username', type: 'text', placeholder: '' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials:any, req:any) {
-        
-        console.log(credentials);
-    
-
+      async authorize(credentials:any) {
         const parsedCredentials = z
         .object({ 
           username: z.string().min(2).max(50),
@@ -45,11 +62,6 @@ export default NuxtAuthHandler({
           })
   
           const userData = await res.json();  
-
-          //
-          console.log(userData);
-
-
           if (res.ok && userData) {
             return {
               token: userData.token,
@@ -69,8 +81,7 @@ export default NuxtAuthHandler({
         }
         
         return null;
-        
-      },
+      }
     }),
   ],
 })
