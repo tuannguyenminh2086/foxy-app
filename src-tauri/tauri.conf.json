@@ -7,7 +7,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "tauri-nuxt-template",
+    "productName": "Foxy",
     "version": "0.1.0"
   },
   "tauri": {
@@ -56,7 +56,7 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 768,
+        "height": 800,
         "resizable": true,
         "title": "Foxy",
         "width": 1280
