@@ -1,13 +1,13 @@
 <template>
   <MasterHeader />
-  <main id="main" class="relative box-border py-5 antialiased">
+  <main id="main" class="relative box-border p-5 pt-10 antialiased">
     <slot />
   </main>
 </template>
 
 <style>
 body {
-  background-color: #f6fafd;
+  background-color: #f3f3f3;
 }
 #main {
   font-family: 'Inter', sans-serif;

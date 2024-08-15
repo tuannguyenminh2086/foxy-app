@@ -11,6 +11,7 @@
     "tauri": "tauri"
   },
   "devDependencies": {
+    "@iconify/vue": "^4.1.2",
     "@nuxt/devtools": "latest",
     "@nuxt/fonts": "^0.7.0",
     "@nuxt/image": "^1.7.0",
@@ -21,6 +22,7 @@
     "@tauri-apps/cli": "^1.5.13",
     "@vee-validate/nuxt": "^4.13.1",
     "@vueuse/nuxt": "^10.11.0",
+    "dayjs-nuxt": "^2.1.9",
     "nuxt": "^3.11.2",
     "shadcn-nuxt": "^0.10.4",
     "typescript": "^5.5.2",
@@ -28,14 +30,20 @@
     "vue-router": "^4.3.0"
   },
   "dependencies": {
+    "@nuxtjs/color-mode": "^3.4.2",
+    "@radix-icons/vue": "^1.0.0",
+    "@tanstack/vue-query": "^5.51.9",
     "@tauri-apps/api": "^1.5.4",
     "@vee-validate/zod": "^4.13.1",
     "@vueuse/core": "^10.11.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "dayjs": "^1.11.12",
+    "laravel-echo": "^1.16.1",
     "lucide-vue-next": "^0.396.0",
     "next-auth": "4.22.5",
     "pinia": "^2.1.7",
+    "pusher-js": "^8.4.0-rc2",
     "radix-vue": "^1.8.4",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",

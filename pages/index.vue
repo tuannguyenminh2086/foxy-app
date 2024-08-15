@@ -1,24 +1,56 @@
 <template>
-  <div class="px-5">
-    <h1 class="text-2xl font-normal">
-      Hello,
-      <span class="block font-bold text-3xl">Mariana</span>
-    </h1>
-    <div>  {{ status }}</div>
-    <div> {{  data  }}</div>
-  </div>
+  <ContainerOneCol>
+    <template #['col-a']>
+
+      <BlocksWelcome />
+      <BlocksTime />
+      <BlocksTrackingToday />
+      <BlocksStats />
+     
+
+    </template>
+    <template #default>
+      <TasksCurrentTracking />
+      <TasksList />
+    </template>
+  </ContainerOneCol>
 </template>
 
 <script>
-definePageMeta({ middleware: 'auth' })
+definePageMeta({ 
+  middleware: 'auth'
+})
+
+useHead({
+  title: 'Dashboard'
+})
+
+import { useQuery } from '@tanstack/vue-query'
+import { useTasksStore } from '~/store/tasks';
+
 export default {
   setup () {
-    const { data } = useAuthState()
-    console.log(data.value);
+    const messages = ref([])
+  
+    // const fetcher = async () =>
+    //   await fetch('https://jsonplaceholder.typicode.com/posts').then((response) =>
+    //     response.json(),
+    //   )
+
+    
+    // onMounted(async () => {
+    //   const { data, suspense } = useQuery({ queryKey: ['test'], queryFn: fetcher })
+    //   await suspense()
+    // })
+
+    const tasksStore = useTasksStore()
+
+    console.log(tasksStore.tasks)
+    tasksStore.fetchTasks();
+
 
     return {
-      status,
-      data
+      messages
     }
   }
 }
