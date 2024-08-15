@@ -2,16 +2,23 @@
 
   <Card class="bg-slate-100">
     <CardHeader class="pb-5">
-      <CardTitle class="text-base font-bold">Tasks - On Progress</CardTitle>
+      <CardTitle class="text-base font-bold">{{ title }}</CardTitle>
     </CardHeader>
     <CardContent class="space-y-2">
-      <TasksListItem v-for="n in 8" />
+      <TasksListItem v-for="task in list"  :task="task"/>
     </CardContent>
   </Card>
 </template>
 
 <script setup lang="ts">
-  const { data } = await useFetch('/api/tasks')
+  import type { PropType } from "vue";
+  import type { ITask } from "~/types/tasks";
+
+  defineProps({
+    title: String,
+    list: Array as PropType<ITask[]>
+  })
+
 </script>
 
 <style scoped>

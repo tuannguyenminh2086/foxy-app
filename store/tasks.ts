@@ -3,26 +3,41 @@ import type { ITask } from "~/types/tasks";
 
 interface TasksState {
   tasks: ITask[];
-  overdue: ITask[];
-  doing: ITask[];
   currentTask: any;
   isTracking: boolean;
 }
+
+interface IResponse {
+  status: string,
+  data?: any
+}
+
 
 export const useTasksStore = defineStore('tasks', {
   state: ():TasksState => {
     return {
       tasks: [],
-      overdue: [],
-      doing: [],
       currentTask: null,
       isTracking: false
     }
   },
+  getters: {
+    tasksInProgress: (state) => state.tasks.filter(item => item.state === 2),
+  },
   actions: {
     async fetchTasks () {
-      const tasks = await $fetch('/api/tasks/list')
-      console.log(tasks)
+      const { data } = await useFetch('/api/tasks/list')
+      if(data.value) {
+        const response:IResponse = data.value  as IResponse;
+        const _tasks = response.data
+      
+        if (_tasks) {
+          let _payload:ITask[] = Object.values(_tasks)
+          // assign tasks
+          this.tasks = _payload ?? [];
+        }
+
+      }
     }
   },
   persist: true

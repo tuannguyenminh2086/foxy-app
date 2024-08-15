@@ -11,7 +11,7 @@
     </template>
     <template #default>
       <TasksCurrentTracking />
-      <TasksList />
+      <TasksList :list=tasksInProgress title="Tasks: On Progress" />
     </template>
   </ContainerOneCol>
 </template>
@@ -25,7 +25,7 @@ useHead({
   title: 'Dashboard'
 })
 
-import { useQuery } from '@tanstack/vue-query'
+// import { useQuery } from '@tanstack/vue-query'
 import { useTasksStore } from '~/store/tasks';
 
 export default {
@@ -44,13 +44,14 @@ export default {
     // })
 
     const tasksStore = useTasksStore()
-
-    console.log(tasksStore.tasks)
+    const { tasksInProgress } = storeToRefs(tasksStore)
     tasksStore.fetchTasks();
+    
 
 
     return {
-      messages
+      messages,
+      tasksInProgress
     }
   }
 }
