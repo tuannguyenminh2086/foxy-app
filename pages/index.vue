@@ -1,24 +1,45 @@
 <template>
-  <div class="px-5">
-    <h1 class="text-2xl font-normal">
-      Hello,
-      <span class="block font-bold text-3xl">Mariana</span>
-    </h1>
-    <div>  {{ status }}</div>
-    <div> {{  data  }}</div>
-  </div>
+  <ContainerOneCol>
+    <template #['col-a']>
+
+      <BlocksWelcome />
+      <BlocksTime />
+      <BlocksTrackingToday />
+      <BlocksStats />
+     
+
+    </template>
+    <template #default>
+      <div class="col-span-full">
+        <BlocksTrackingWeek />
+      </div>
+      <div class="col-span-full">
+        <TasksList :list=tasksInProgress title="Tasks: On Progress" :show-view-all="true" />
+      </div>
+      
+    </template>
+  </ContainerOneCol>
 </template>
 
 <script>
-definePageMeta({ middleware: 'auth' })
+definePageMeta({ 
+  middleware: 'auth'
+})
+
+useHead({
+  title: 'Dashboard'
+})
+
+import { useTasksStore } from '~/store/tasks';
+
 export default {
   setup () {
-    const { data } = useAuthState()
-    console.log(data.value);
-
+    const tasksStore = useTasksStore()
+    const { tasksInProgress } = storeToRefs(tasksStore)
+    tasksStore.fetchTasks();
+    
     return {
-      status,
-      data
+      tasksInProgress
     }
   }
 }
