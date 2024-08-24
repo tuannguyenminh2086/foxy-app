@@ -1,3 +1,19 @@
+export interface IUser {
+  id: number;
+  first_name: string;
+  last_name?: string;
+  token?: string;
+  avatar?: string;
+  last_seen: string;
+  terminal_status: number;
+  username?: string;
+  status?: number;
+  permissions?: string[];
+  email?: string;
+  dob?: string;
+  tokenExpiration?: number;
+}
+
 export interface ITask {
   id: number;
   name: string;
@@ -9,9 +25,8 @@ export interface ITask {
   state?: number;
   spent?: number | null;
   // tag?: ITag[];
-  // assignees: IUser[] | number[] | null;
+  assignees: IUser[] | number[] | null;
   tag?: any;
-  assignees: any;
   status?: 0 | 1;
   client?: {
     id: number;
@@ -34,4 +49,14 @@ export interface ITask {
   time_tracking?: any;
   quick_record?: boolean;
 
+}
+
+export interface ITrackingTask {
+  end_time: any;
+  id: number;
+  is_new_task_tracking: boolean;
+  spent: number;
+  start_time: string;
+  task: ITask;
+  user: IUser;
 }

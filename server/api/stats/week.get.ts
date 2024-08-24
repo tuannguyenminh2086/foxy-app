@@ -1,5 +1,6 @@
 import { getServerSession } from '#auth'
 import dayjs from 'dayjs';
+import qs from 'qs';
 
 
 interface IResponse {
@@ -19,16 +20,21 @@ export default defineEventHandler(async(event) => {
   try {
     const config = useRuntimeConfig();
     const _user: any = session.user
-    const _start_date = dayjs().format('YYYY-MM-DD')
-    const _end_date = dayjs().add(1, "day").format('YYYY-MM-DD')
+
+
+    const _start = dayjs().day(0).format('YYYY-MM-DD')
+    const _end = dayjs().day(6).format('YYYY-MM-DD')
   
     let _params = {
       user_id: _user.id,
-      start_date: _start_date,
-      end_date: _end_date
+      start_date: _start,
+      end_date: _end
     };
-  
-    const qs = '?' + new URLSearchParams(_params).toString();
+
+    const _qs = qs.stringify(_params, {
+      arrayFormat: 'indices',
+      encodeValuesOnly: true,
+    });
 
     const requestOptions = {
       method: "GET",
@@ -39,11 +45,14 @@ export default defineEventHandler(async(event) => {
       }
     };
 
-    const _url = `${config.cmsUrl}/api/time-tracking/total${qs}`;
-    const req = await fetch(_url, requestOptions )
-    const res = await req.json();
+    const _url = `${config.cmsUrl}/api/time-tracking/total?${_qs}`;
+    const _req = await fetch(_url, requestOptions)
+    const res = await _req.json();
     if (res) {
-      return { status: 'success', data: {...res.data} }
+      return { status: 'success', data: { 
+          week: { ...res.data }
+        }
+      }
     }
     
 

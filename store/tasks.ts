@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import dayjs from 'dayjs';
 import type { ITask } from "~/types/tasks";
 
 interface TasksState {
@@ -23,6 +24,19 @@ export const useTasksStore = defineStore('tasks', {
   },
   getters: {
     tasksInProgress: (state) => state.tasks.filter(item => item.state === 2),
+    tasksTodo:(state) => state.tasks.filter(item => item.state === 1),
+    tasksDueDate: (state) => state.tasks.filter(item => {
+      if(item.due_date && item.state !== 3 && item.state !== 4 ) {
+        const _duedate = dayjs(item.due_date);
+        const today = dayjs();
+        const diff = _duedate.diff(today, 'day');
+        // console.log(diff, 'diff');
+        // console.log(today);
+        if (diff >= 0) {
+          return item
+        }
+      }
+    })
   },
   actions: {
     async fetchTasks () {

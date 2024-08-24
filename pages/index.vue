@@ -10,8 +10,13 @@
 
     </template>
     <template #default>
-      <TasksCurrentTracking />
-      <TasksList :list=tasksInProgress title="Tasks: On Progress" />
+      <div class="col-span-full">
+        <BlocksTrackingWeek />
+      </div>
+      <div class="col-span-full">
+        <TasksList :list=tasksInProgress title="Tasks: On Progress" :show-view-all="true" />
+      </div>
+      
     </template>
   </ContainerOneCol>
 </template>
@@ -25,32 +30,15 @@ useHead({
   title: 'Dashboard'
 })
 
-// import { useQuery } from '@tanstack/vue-query'
 import { useTasksStore } from '~/store/tasks';
 
 export default {
   setup () {
-    const messages = ref([])
-  
-    // const fetcher = async () =>
-    //   await fetch('https://jsonplaceholder.typicode.com/posts').then((response) =>
-    //     response.json(),
-    //   )
-
-    
-    // onMounted(async () => {
-    //   const { data, suspense } = useQuery({ queryKey: ['test'], queryFn: fetcher })
-    //   await suspense()
-    // })
-
     const tasksStore = useTasksStore()
     const { tasksInProgress } = storeToRefs(tasksStore)
     tasksStore.fetchTasks();
     
-
-
     return {
-      messages,
       tasksInProgress
     }
   }
