@@ -10,11 +10,13 @@
 </template>
 
 <script setup>
-  import { useTrackingStore } from '~/store/tracking';
+  import { useTasksStore } from '~/store/tasks';
+import { useTrackingStore } from '~/store/tracking';
   const { $echo, $listen } = useNuxtApp();
 
   const { data, status } = useAuth();
   const trackingStore = useTrackingStore()
+  const tasksStore = useTasksStore()
   const _user = data.value.user
 
   if ( status.value === 'authenticated' && data.value) {
@@ -34,8 +36,9 @@
       console.log(e, 'task: created');
     })
 
-    $listen($echo, `mytasks.${_user.id}`, '.TaskUpdated', (e) => {
+    $listen($echo, `mytasks.${_user.id}`, '.TaskUpdated', async (e) => {
       console.log(e, 'task: updated');
+      await useAsyncData('task update', () => tasksStore.fetchTasks())
     });
 
 

@@ -52,6 +52,17 @@ export const useTasksStore = defineStore('tasks', {
         }
 
       }
+    },
+    async updateTask (tid:number, payload: any) {
+      const data = await $fetch('/api/tasks/update', {
+        method: 'post',
+        body: {
+          tid,
+          payload
+        }
+      })
+
+      console.log(data)
     }
   },
   persist: true

@@ -60,3 +60,5 @@ export interface ITrackingTask {
   task: ITask;
   user: IUser;
 }
+
+export type TState = 1 | 2 | 3 | 4
