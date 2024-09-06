@@ -1,0 +1,44 @@
+.vis-timeline {
+  @apply text-sm border-none;
+}
+
+
+.vis-time-axis .vis-grid.vis-odd {
+  @apply bg-slate-50;
+}
+
+/* gray background in weekends, white text color */
+.vis-time-axis .vis-grid.vis-saturday,
+.vis-time-axis .vis-grid.vis-sunday {
+  @apply bg-gray-100;
+}
+.vis-time-axis .vis-text.vis-saturday,
+.vis-time-axis .vis-text.vis-sunday {
+  @apply text-base text-black;
+}
+
+.vis-item {
+  @apply text-base shadow-md font-medium;
+}
+
+.vis-item,
+.vis-item.vis-line {
+  @apply border-blue-500;
+}
+
+.vis-time-axis .vis-grid.vis-minor {
+  @apply border-2;
+}
+
+/* Resources */
+.vis-group-level-0 .vis-inner div {
+  @apply rounded-full overflow-hidden w-12 h-12 box-border;
+}
+
+.vis-group-level-0 .vis-inner div img {
+  @apply object-center block w-full object-fill;
+}
+
+.vis-group-level-0 .vis-inner h4 {
+  @apply block mt-1 text-xs;
+}

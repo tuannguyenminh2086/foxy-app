@@ -63,5 +63,6 @@ export default defineNuxtConfig({
 			pusherAppKey: process.env.NUXT_PUBLIC_PUSHER_KEY,
 			pusherAppCluster: process.env.NUXT_PUBLIC_PUSHER_CLUSTER
 		}
-	}
+	},
+	css: ['~/assets/css/vis.css']
 })

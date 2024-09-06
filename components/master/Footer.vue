@@ -11,15 +11,21 @@
 
 <script setup>
   import { useTasksStore } from '~/store/tasks';
-import { useTrackingStore } from '~/store/tracking';
+  import { useTrackingStore } from '~/store/tracking';
+  import { useMemberStore } from '~/store/member';
   const { $echo, $listen } = useNuxtApp();
 
   const { data, status } = useAuth();
   const trackingStore = useTrackingStore()
   const tasksStore = useTasksStore()
+  const membersStore = useMemberStore()
+
   const _user = data.value.user
 
   if ( status.value === 'authenticated' && data.value) {
+
+   
+    await useAsyncData('members', () =>  membersStore.fetchMembers())
 
     // time tracking 
     $listen($echo, 'time-tracking', '.time-tracking.started', async (e) => {

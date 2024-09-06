@@ -1,0 +1,23 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING") 
+}
+
+model resources_item {
+  created_at    DateTime @default(now()) @db.Timestamptz(6)
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  content       String?  
+  start         DateTime? @db.Timestamptz(6)
+  end           DateTime? @db.Timestamptz(6)
+  className     String?  @db.VarChar
+  group         String?  @db.VarChar
+  title         String?  @db.VarChar
+}

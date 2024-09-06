@@ -22,6 +22,11 @@
         </NuxtLink>
       </Button>
       <Button variant="link" >
+        <NuxtLink to="/schedule" class="">
+          <CalendarIcon />
+        </NuxtLink>
+      </Button>
+      <Button variant="link" >
         <NuxtLink to="/report" class="">
           <BarChartIcon />
         </NuxtLink>
@@ -34,6 +39,7 @@
 import { BarChartIcon, DashboardIcon, HomeIcon, LayoutIcon, StackIcon } from '@radix-icons/vue';
 import { useAppStore } from '~/store/app';
 import { onClickOutside } from '@vueuse/core'
+import { CalendarIcon } from '@radix-icons/vue';
 
 const appStore = useAppStore();
 const { isSidebarOpen } = storeToRefs(appStore)
