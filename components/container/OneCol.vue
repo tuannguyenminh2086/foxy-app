@@ -4,17 +4,13 @@
       <slot name="col-a"></slot>
     </div>
     <div class="col-span-full lg:col-span-8 2xl:col-span-9">
-      <div class="grid grid-cols-8 gap-4">
+      <div class="grid grid-cols-8 gap-5">
         <slot></slot>
       </div>
     </div>
   </div>
 </template>
 
-<script setup>
+<script setup></script>
 
-</script>
-
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

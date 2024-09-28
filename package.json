@@ -7,7 +7,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
+    "postinstall": "nuxt prepare && prisma generate",
     "tauri": "tauri"
   },
   "devDependencies": {
@@ -25,7 +25,7 @@
     "@vee-validate/nuxt": "^4.13.1",
     "@vueuse/nuxt": "^10.11.0",
     "dayjs-nuxt": "^2.1.9",
-    "nuxt": "^3.11.2",
+    "nuxt": "^3.13.2",
     "shadcn-nuxt": "^0.10.4",
     "typescript": "^5.5.2",
     "vue": "^3.4.21",
@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "@nuxtjs/color-mode": "^3.4.2",
+    "@prisma/client": "^5.20.0",
     "@prisma/nuxt": "^0.0.35",
     "@radix-icons/vue": "^1.0.0",
     "@tanstack/vue-query": "^5.51.9",

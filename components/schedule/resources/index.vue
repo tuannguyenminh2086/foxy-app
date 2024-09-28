@@ -1,59 +1,95 @@
 <template>
-  <div>
-    <div v-vis-timeline="{ options, groups, items }" class="box-border w-full h-full"></div>
+  <div class="space-y-5">
+    <div class="flex justify-end">
+      <Button @click="openDialog">
+        <PlusIcon class="w-4 h-4 mr-2 fill-white" />New Item
+      </Button>
+    </div>
+    <div
+      v-if="items.length > 0"
+      v-vis-timeline="{ options, groups, items, events }"
+      class="box-border w-full h-full bg-white dark:bg-black"
+    ></div>
+
+    <Dialog :open="isOpen" @update:open="closeDialog">
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>New Item</DialogTitle>
+          <DialogDescription>Dialog content goes here.</DialogDescription>
+        </DialogHeader>
+        <!-- Add more content as needed -->
+      </DialogContent>
+    </Dialog>
   </div>
 </template>
 
 <script setup>
-import { useMemberStore } from '~/store/member';
+import { PlusIcon } from "@radix-icons/vue";
+import { useSchedulerStore } from "~/store/schedulers";
+const schedulerStore = useSchedulerStore();
+const { resources_items, resources_groups } = storeToRefs(schedulerStore);
 
-// TODO
-// planning the resources with tasks and member
-// a data table between tasks and member with start and end date.
+const items = computed(() => resources_items.value);
+const groups = computed(() => resources_groups.value);
+const isOpen = ref(false);
+
+const openDialog = () => {
+  isOpen.value = true;
+};
+
+const closeDialog = () => {
+  isOpen.value = false;
+};
+
 const options = ref({
   // Your timeline options here
   start: new Date(),
   orientation: "top",
+  clickToUse: true,
   editable: true,
-  groupEditable: true,
-})
+  timeAxis: { scale: "day", step: 1 },
+  zoomMin: 1000 * 60 * 60 * 24 * 7, // Set minimum zoom to one week
+  zoomMax: 1000 * 60 * 60 * 24 * 31 * 1, // Set maximum zoom to about 3 months
+  onAdd: async (item, callback) => {
+    item.content = prompt("Edit items text:", item.content);
 
-// const groups = ref([
-//   // Your groups data here
-//   { id:0, content: "Group 1" },
-//   { id:1, content: "Group 2" },
-//   { id:2, content: "Group 3" },
-//   { id:3, content: "Group 4" },
-//   { id:4, content: "Group 5" }
-// ])
+    if (item.content != null) {
+      const rs = await schedulerStore.addResourceItem(item);
+      if (rs.successful) {
+        callback(item); // Confirm the addition
+      }
+    } else {
+      callback(null); // cancel updating the item
+    }
+  },
+  onUpdate: (item, callback) => {
+    console.log("Item being updated:", item);
+    // You can modify the item here before it's updated
+    callback(item); // Confirm the update
+  },
+  onMove: (item, callback) => {
+    console.log("Item being moved:", item);
+    // You can modify the item here before it's moved
+    callback(item); // Confirm the move
+  },
+  onRemove: (item, callback) => {
+    console.log("Item being removed:", item);
+    // You can perform any necessary cleanup here
+    callback(item); // Confirm the removal
+  },
+  onMoving: (item, callback) => {
+    console.log("Item is moving:", item);
+    // You can validate the move here
+    callback(item); // Allow the move
+    // callback(null) // To cancel the move
+  },
+});
 
-const groups = ref([])
-
-const items = ref([
-  // Your items data here
-  {id: 1, content: "Item 1", start: new Date("2024-09-03") , end: new Date("2024-09-10"), group: 1, className: "touringcar",},
-  {id: 2, content: "item 2", start: new Date("2024-09-03"), group: 2},
-  {id: 3, content: "item 3", start: new Date("2024-09-04"), group: 1},
-  {id: 4, content: "item 4", start: new Date("2024-09-05"), group: 0},
-  {id: 5, content: "item 5", start: new Date("2024-09-02"), group: 4}
-])
-
-const membersStore = useMemberStore()
-const { members } = storeToRefs(membersStore);
-
-
-members.value.forEach(member => {
-  let group = {}
-  group.id= member.id
-  group.content = "<div><img src='" + member.avatar+"' alt='' width='60em' /></div> <h4>" +member.first_name + ' ' + member.last_name+ "</h4> ";
-  group.title = member.first_name + ' ' + member.last_name ;
-
-  groups.value.push(group);
-})
-
-
+const events = {
+  select: (properties) => {
+    console.log("Selected items:", properties.items);
+  },
+};
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

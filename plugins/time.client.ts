@@ -17,8 +17,10 @@ export default defineNuxtPlugin(() => {
         if (msg !== '') {
           return dayjs(msg).format(format)
         }
-        
         return 'N/A'
+      },
+      convertDateTime: (msg: string, format: string = 'DD MMM, YYYY') => {
+        return ''
       }
     }
   }

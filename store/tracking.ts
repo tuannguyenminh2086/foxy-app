@@ -33,6 +33,19 @@ export const useTrackingStore = defineStore('tracking', {
         }
       }
 
+    },
+    async stopTracking (tid:number) {
+      const data = await $fetch('/api/tracking/action', {
+        method: 'post',
+        body: {
+          action: 'stop',
+          tid: tid
+        }
+      });
+
+      if(data) {
+        this.currentTask = null
+      }
     }
   },
   persist: true

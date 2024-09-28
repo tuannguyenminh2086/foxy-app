@@ -1,12 +1,12 @@
 <template>
-  <div className='h-full flex-1 min-w-[300px]'
+  <div className='flex-1 min-w-[300px] h-[700px] overflow-hidden overflow-y-auto'
     @dragover.prevent
     @drop="drop($event)"
   >
     <div className='px-4 py-2 mb-5 flex space-x-2 items-center'>
       <span class="w-3 h-3 rounded-full block" :class="indicatorClass"></span>
       <h4 class="text-base font-semibold">{{ title }}</h4>
-      <Badge :class="indicatorClass">{{ filteredTasks.length }}</Badge>
+      <Badge :class="indicatorClass">{{ filteredTasks.length ?? 0 }}</Badge>
     </div>
 
     <div

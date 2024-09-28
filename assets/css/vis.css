@@ -27,7 +27,7 @@
 }
 
 .vis-time-axis .vis-grid.vis-minor {
-  @apply border-2;
+  @apply border;
 }
 
 /* Resources */
@@ -41,4 +41,7 @@
 
 .vis-group-level-0 .vis-inner h4 {
   @apply block mt-1 text-xs;
+}
+.vis-today {
+  @apply bg-blue-100/50;
 }

@@ -2,7 +2,7 @@
   <div>
 
     <Teleport to="body">
-      <div class="fixed bottom-4 right-5 w-1/2 z-50 box-border">
+      <div class="fixed bottom-0 right-0 w-full lg:w-8/12 z-50 box-border">
         <TasksCurrentTracking />
       </div>
     </Teleport>
@@ -26,14 +26,16 @@
 
    
     await useAsyncData('members', () =>  membersStore.fetchMembers())
+    await useAsyncData('task-tracking', () => trackingStore.fetchCurrentTracking())
 
     // time tracking 
     $listen($echo, 'time-tracking', '.time-tracking.started', async (e) => {
-      await useAsyncData('task', () => trackingStore.fetchCurrentTracking())
+      await useAsyncData('task-tracking', () => trackingStore.fetchCurrentTracking())
     });
 
-    $listen($echo, 'time-tracking','.time-tracking.stopped', (e) => {
+    $listen($echo, 'time-tracking','.time-tracking.stopped', async(e) => {
       console.log(e, 'time-tracking: stopped');
+      await useAsyncData('task-tracking', () => trackingStore.fetchCurrentTracking())
     });
 
 
@@ -63,9 +65,6 @@
     console.log('leave the channel')
   })
   
-  
-  // time tracking data
-  // {id: 62778, spent: null, start_time: '2024-08-23 04:21:42', end_time: null, is_new_task_tracking: false }
 
 </script>
 

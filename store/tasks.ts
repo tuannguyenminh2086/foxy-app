@@ -62,7 +62,9 @@ export const useTasksStore = defineStore('tasks', {
         }
       })
 
-      console.log(data)
+      if(data?.status == 'success') {
+        await this.fetchTasks()
+      }
     }
   },
   persist: true

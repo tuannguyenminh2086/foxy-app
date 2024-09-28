@@ -11,6 +11,11 @@
   })
 
   const intervalId = ref()
+
+
+
+
+  
   const duration = ref(0)
 
 
@@ -28,7 +33,7 @@
 
 
   onMounted(() => {
-    // startInterval()
+    startInterval()
   })
 
   onUnmounted(() => {

@@ -17,6 +17,7 @@ export default defineNuxtConfig({
 			"@sidebase/nuxt-auth",
 			"@nuxt/image",
 			"dayjs-nuxt",
+			"@prisma/nuxt"
    ],
 	shadcn: {
 		prefix: '',
@@ -39,6 +40,9 @@ export default defineNuxtConfig({
 		styles: ['normal']
 		},
 	},
+	prisma: {
+    autoSetupPrisma: true,
+  },
 	auth: {
     globalAppMiddleware: true,
     baseURL: process.env.NUXT_PUBLIC_API_URL,

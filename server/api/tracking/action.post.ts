@@ -10,25 +10,33 @@ export default defineEventHandler(async(event) => {
   try {
     const config = useRuntimeConfig();
     const _user: any = session.user;
-    const _query = getQuery(event)
+    const body = await readBody(event)
+
+    const payload = {
+      action: body.action,
+      task_id: body.tid
+    }
+
+    if (!body.tid || !body.action) {
+      throw new Error('missing data');
+    }
 
     const requestOptions = {
-      method: "GET",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: 'application/json',
         Authorization: `Bearer ${_user.token}`
-      }
+      },
+      body: JSON.stringify(payload)
     };
 
-    const url = `${config.cmsUrl}/api/time-tracking?isWorking=${_query.isWorking}&trackedUser=${_user.id}`;
+    const url = `${config.cmsUrl}/api/time-tracking`;
     const req = await fetch(url, requestOptions )
     const res = await req.json();
 
-    console.log(res)
-
     if (res) {
-      return { status: 'success', data: {...res.data[0]} }
+      return { status: 'success' }
     }
 
   } catch (error) {

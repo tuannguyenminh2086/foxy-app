@@ -57,6 +57,7 @@ import type { ITask } from '~/types/tasks';
 
   const dragStart = (event:any, task:ITask) => {
     event.dataTransfer.setData('text/plain', task.id);
+    event.dataTransfer.dropEffect = 'move';
   };
   
 </script>

@@ -1,24 +1,24 @@
 <template>
-  <div v-if="isTracking" class="p-5 border shadow bg-background">
+  <div v-if="isTracking" class="p-5 py-8 border bg-primary text-white rounded-tl-sm">
     <div class="grid grid-cols-12 gap-5">
-      <div class="col-span-2">
+      <div class="col-span-1">
         <span class="text-sm leading-none">Current tracking</span>
       </div>
       <div class="col-span-3">
-        <span class="text-4xl font-bold">
+        <span class="text-5xl font-bold">
           <BlocksTrackingCounter :counter="counter" />
         </span>
       </div>
-      <div class="col-span-5">
-        <div class="text-md font-semibold" >{{ currentTask?.task.name }}</div>
-        <p class="text-muted-foreground text-xs"  v-if="currentTask">
-          <span>{{ currentTask.task.client?.name }}</span> / 
-          <span>{{ currentTask.task.project?.name }}</span>
+      <div class="col-span-7 pl-5 text-black">
+        <div class="text-md font-semibold max-w-[420px] truncate" >{{ currentTask?.task.name }}</div>
+        <p class="text-xs"  v-if="currentTask">
+          <span v-if="currentTask.task.client">{{ currentTask.task.client?.name }}</span> 
+          <span v-if="currentTask.task.project">{{ currentTask.task.project?.name }}</span>
         </p>
       </div>
-      <div class="col-span-2 flex justify-end">
+      <div class="col-span-1 flex justify-end">
         <div class="flex items-center gap-2">
-          <Button variant="destructive" size="icon">
+          <Button variant="destructive" size="icon" @click.prevent="stopHandle" class="w-14 h-14">
             <StopwatchIcon class="w-4 h-4" />
           </Button>
         </div>
@@ -32,36 +32,22 @@
   import { useTrackingStore } from '~/store/tracking';
 
   const trackingStore = useTrackingStore()
-  const { isTracking } = storeToRefs(trackingStore);
+  const  {stopTracking} = trackingStore;
+  const { isTracking, currentTask } = storeToRefs(trackingStore);
   const counter = ref(0);
 
+  console.log(currentTask.value);
 
-  const currentTask = reactive({
-    id: 62778, 
-    spent: null, 
-    start_time: '2024-08-23 04:21:42', 
-    end_time: null, 
-    is_new_task_tracking: false,
-    task: {
-      name: 'You can\'t compress the program without quantifying the open-source SS',
-      client: {
-        name: 'xxxx'
-      },
-      project: {
-        name: 'Project Name'
-      }
+
+  
+
+  const stopHandle = () => {
+
+    if (currentTask.value) {
+      stopTracking(currentTask.value?.id)
     }
-  })
-
-
-  // const counter = computed(() => {
-
-  //   let time = 0;   
-  //     setInterval(() => { return time = time + 1000}, 1000)
-  //   return time;
-
-  //   })
-
+    
+  }
 
   
 </script>
