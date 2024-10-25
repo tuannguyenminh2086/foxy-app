@@ -5,7 +5,23 @@
       description="Plan our resource"
     >
       <template #default>
-        <ScheduleResources />
+        <Tabs default-value="resources" class="">
+          <TabsList>
+            <TabsTrigger value="resources">
+              Resources
+            </TabsTrigger>
+            <TabsTrigger value="projects">
+              Projects
+            </TabsTrigger>
+          </TabsList>
+          <TabsContent value="resources">
+            <ScheduleResources />
+          </TabsContent>
+          <TabsContent value="projects">
+            Comming soon
+          </TabsContent>
+        </Tabs>
+       
       </template>
     </ContainerFullWithTitle>
   </div>
@@ -19,6 +35,7 @@ import { useSchedulerStore } from "~/store/schedulers";
 const schedulerStore = useSchedulerStore();
 schedulerStore.getResourcesGroup();
 schedulerStore.fetchResourcesItems();
+
 </script>
 
 <style scoped></style>

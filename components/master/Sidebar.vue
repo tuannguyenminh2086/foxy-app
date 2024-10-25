@@ -27,6 +27,11 @@
         </NuxtLink>
       </Button>
       <Button variant="link" >
+        <NuxtLink to="/hr" class="">
+          <FaceIcon />
+        </NuxtLink>
+      </Button>
+      <Button variant="link" >
         <NuxtLink to="/report" class="">
           <BarChartIcon />
         </NuxtLink>
@@ -36,7 +41,7 @@
 </template>
 
 <script setup>
-import { BarChartIcon, DashboardIcon, HomeIcon, LayoutIcon, StackIcon } from '@radix-icons/vue';
+import { BarChartIcon, DashboardIcon, FaceIcon, HomeIcon, LayoutIcon, StackIcon } from '@radix-icons/vue';
 import { useAppStore } from '~/store/app';
 import { onClickOutside } from '@vueuse/core'
 import { CalendarIcon } from '@radix-icons/vue';

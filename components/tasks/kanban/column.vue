@@ -42,6 +42,7 @@ import type { TState } from '~/types/tasks';
 
  const drop = (event:any) => {
     const cardId = event.dataTransfer.getData('text/plain');
+    
     emit('moveCard', parseInt(cardId, 10), props.status);
   };
 

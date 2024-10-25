@@ -1,72 +1,89 @@
-import { resolve } from "node:path"
+import { resolve } from "node:path";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-	devtools: { enabled: true },
+  devtools: { enabled: true },
 
-	// SSR must be turned off
-	ssr: false,
-	modules: [
-			"@nuxtjs/tailwindcss",
-			"@nuxtjs/color-mode",
-			"shadcn-nuxt",
-			"@pinia/nuxt",
-			'@pinia-plugin-persistedstate/nuxt',
-			"@vueuse/nuxt",
-			"@vee-validate/nuxt",
-			"@nuxt/fonts",
-			"@sidebase/nuxt-auth",
-			"@nuxt/image",
-			"dayjs-nuxt",
-			"@prisma/nuxt"
-   ],
-	shadcn: {
-		prefix: '',
-		componentDir: './components/ui'
-	},
-	colorMode: {
-    classSuffix: ''
+  // SSR must be turned off
+  ssr: false,
+
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "@nuxtjs/color-mode",
+    "shadcn-nuxt",
+    "@pinia/nuxt",
+    "@pinia-plugin-persistedstate/nuxt",
+    "@vueuse/nuxt",
+    "@vee-validate/nuxt",
+    "@nuxt/fonts",
+    "@sidebase/nuxt-auth",
+    "@nuxt/image",
+    "dayjs-nuxt",
+    "@prisma/nuxt",
+  ],
+
+  shadcn: {
+    prefix: "",
+    componentDir: "./components/ui",
   },
-	dayjs: {
-    plugins: ['relativeTime', 'utc', 'timezone', 'localeData'],
+
+  colorMode: {
+    classSuffix: "",
   },
-	fonts: {
-	// You can provide overrides for individual families
-	families: [
-		{ name: 'Inter', provider: 'google' },
-		{ name: 'Manrope', provider: 'google'}
-	],
-	defaults: {
-		weights: [400, 500, 600,700, 800],
-		styles: ['normal']
-		},
-	},
-	prisma: {
+
+  dayjs: {
+    plugins: ["relativeTime", "utc", "timezone", "localeData"],
+  },
+
+  fonts: {
+    // You can provide overrides for individual families
+    families: [
+      { name: "Inter", provider: "google" },
+      { name: "Manrope", provider: "google" },
+    ],
+    defaults: {
+      weights: [400, 500, 600, 700, 800],
+      styles: ["normal"],
+    },
+  },
+
+  prisma: {
     autoSetupPrisma: true,
   },
-	auth: {
+
+  nitro: {
+    bodyParser: {
+      sizeLimit: "10mb", // Adjust as needed
+    },
+  },
+
+  auth: {
     globalAppMiddleware: true,
     baseURL: process.env.NUXT_PUBLIC_API_URL,
     provider: {
-      type: 'authjs'
+      type: "authjs",
     },
   },
-	runtimeConfig: {
-		authJs: {
-			secret: process.env.NUXT_NEXTAUTH_SECRET, // You can generate one with `openssl rand -base64 32`
-		},
-		cmsUrl: process.env.NUXT_BACKEND_URL,
-		public: {
-			authJs: {
-				baseUrl: process.env.NUXT_PUBLIC_AUTH_URL, // The URL of your deployed app (used for origin Check in production)
-				verifyClientOnEveryRequest: true // whether to hit the /auth/session endpoint on every client request
-			},
-			cmsUrl: process.env.NUXT_BACKEND_URL,
-			storageUrl: process.env.NUXT_PUBLIC_STORAGE_URL,
-			vaporBucket: process.env.NUXT_PUBLIC_LARAVEL_VAPOR_BUCKET,
-			pusherAppId: process.env.PUSHER_APP_ID,
-			pusherAppKey: process.env.NUXT_PUBLIC_PUSHER_KEY,
-			pusherAppCluster: process.env.NUXT_PUBLIC_PUSHER_CLUSTER
-		}
-	},
-	css: ['~/assets/css/vis.css']
-})
+
+  runtimeConfig: {
+    authJs: {
+      secret: process.env.NUXT_NEXTAUTH_SECRET, // You can generate one with `openssl rand -base64 32`
+    },
+    cmsUrl: process.env.NUXT_BACKEND_URL,
+    claudeApiKey: process.env.CLAUDE_API_KEY,
+    public: {
+      authJs: {
+        baseUrl: process.env.NUXT_PUBLIC_AUTH_URL, // The URL of your deployed app (used for origin Check in production)
+        verifyClientOnEveryRequest: true, // whether to hit the /auth/session endpoint on every client request
+      },
+      cmsUrl: process.env.NUXT_BACKEND_URL,
+      storageUrl: process.env.NUXT_PUBLIC_STORAGE_URL,
+      vaporBucket: process.env.NUXT_PUBLIC_LARAVEL_VAPOR_BUCKET,
+      pusherAppId: process.env.PUSHER_APP_ID,
+      pusherAppKey: process.env.NUXT_PUBLIC_PUSHER_KEY,
+      pusherAppCluster: process.env.NUXT_PUBLIC_PUSHER_CLUSTER,
+    },
+  },
+
+  css: ["~/assets/css/vis.css"],
+  compatibilityDate: "2024-10-23",
+});
