@@ -5,7 +5,6 @@
   </main>
   <MasterFooter />
   <MasterSidebar />
-
 </template>
 <script setup>
 
