@@ -6,7 +6,7 @@
       <div class="col-span-4"></div>
       <div class="col-span-6 flex justify-end space-x-2">
         <DateRangePicker />
-        <MembersSelection />
+        <MembersPicker />
       </div>
       <div class="col-span-2 space-x-2 flex justify-end">
         <Button>Query</Button>
@@ -102,7 +102,6 @@
 </template>
 
 <script>
-import Multiselect from 'vue-multiselect'
 export default {
   setup () {
     

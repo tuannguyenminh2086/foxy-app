@@ -9,52 +9,52 @@
 </template>
 
 <script setup>
-  import { useTasksStore } from '~/store/tasks';
-  import { useTrackingStore } from '~/store/tracking';
-  const { $echo, $listen } = useNuxtApp();
+  // import { useTasksStore } from '~/store/tasks';
+  // import { useTrackingStore } from '~/store/tracking';
+  // const { $echo, $listen } = useNuxtApp();
 
-  const { data, status } = useAuth();
-  const trackingStore = useTrackingStore()
-  const tasksStore = useTasksStore()
-  const _user = data.value.user
+  // const { data, status } = useAuth();
+  // const trackingStore = useTrackingStore()
+  // const tasksStore = useTasksStore()
+  // const _user = data.value.user
 
-  if ( status.value === 'authenticated' && data.value) {
+  // if ( status.value === 'authenticated' && data.value) {
 
-    // time tracking 
-    $listen($echo, 'time-tracking', '.time-tracking.started', async (e) => {
-      await useAsyncData('task', () => trackingStore.fetchCurrentTracking())
-    });
+  //   // time tracking 
+  //   $listen($echo, 'time-tracking', '.time-tracking.started', async (e) => {
+  //     await useAsyncData('task', () => trackingStore.fetchCurrentTracking())
+  //   });
 
-    $listen($echo, 'time-tracking','.time-tracking.stopped', (e) => {
-      console.log(e, 'time-tracking: stopped');
-    });
-
-
-    // my task
-    $listen($echo, `mytasks.${_user.id}`, '.TaskCreated', (e) => {
-      console.log(e, 'task: created');
-    })
-
-    $listen($echo, `mytasks.${_user.id}`, '.TaskUpdated', async (e) => {
-      console.log(e, 'task: updated');
-      await useAsyncData('task update', () => tasksStore.fetchTasks())
-    });
+  //   $listen($echo, 'time-tracking','.time-tracking.stopped', (e) => {
+  //     console.log(e, 'time-tracking: stopped');
+  //   });
 
 
-    // user activity
-    $listen($echo, `users.wakeup.${_user.id}`, '.users.wakeup', (e) => {
-      console.log(e, 'user: wakeup');
-    })
+  //   // my task
+  //   $listen($echo, `mytasks.${_user.id}`, '.TaskCreated', (e) => {
+  //     console.log(e, 'task: created');
+  //   })
 
-    $listen($echo, 'user.activity', '.user.activity', (e) => {
-      console.log(e, 'user: activity');
-    })
-  }
+  //   $listen($echo, `mytasks.${_user.id}`, '.TaskUpdated', async (e) => {
+  //     console.log(e, 'task: updated');
+  //     await useAsyncData('task update', () => tasksStore.fetchTasks())
+  //   });
 
 
-  onUnmounted( () => {
-    console.log('leave the channel')
-  })
+  //   // user activity
+  //   $listen($echo, `users.wakeup.${_user.id}`, '.users.wakeup', (e) => {
+  //     console.log(e, 'user: wakeup');
+  //   })
+
+  //   $listen($echo, 'user.activity', '.user.activity', (e) => {
+  //     console.log(e, 'user: activity');
+  //   })
+  // }
+
+
+  // onUnmounted( () => {
+  //   console.log('leave the channel')
+  // })
   
   
   // time tracking data

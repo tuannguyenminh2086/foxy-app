@@ -8,6 +8,7 @@
 
 <script>
 import { useMembersStore } from '~/store/members';
+import { useOverviewStore } from '~/store/overview';
 
 definePageMeta({ 
   middleware: 'auth'

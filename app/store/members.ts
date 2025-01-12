@@ -6,6 +6,11 @@ interface MembersState {
   members: User[];
 }
 
+interface AllMember {
+  id: number
+  name: string
+}
+
 
 export const useMembersStore = defineStore('members', {
   state:():MembersState => {
@@ -14,7 +19,18 @@ export const useMembersStore = defineStore('members', {
     }
   },
   getters: {
-    getAllMembers: (state) => state.members,
+    getAllMembers: (state) => {
+
+      const allMemberItem:AllMember = {
+        name: 'All members',
+        id: -1
+      }
+      const simplifiedMembers = state.members.map(member => ({
+        id: member.id,
+        name: member.first_name + ' ' + member.last_name
+      }));
+      return [allMemberItem, ...simplifiedMembers];
+    }
   },
   actions: {
     async fetchAll () {
