@@ -8,11 +8,14 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
     "@iconify/vue": "^4.1.2",
     "@nuxt/devtools": "latest",
+    "@nuxt/eslint": "0.7.4",
     "@nuxt/fonts": "^0.7.0",
     "@nuxt/image": "^1.7.0",
     "@nuxtjs/tailwindcss": "^6.12.0",
@@ -25,6 +28,7 @@
     "@vee-validate/nuxt": "^4.13.1",
     "@vueuse/nuxt": "^10.11.0",
     "dayjs-nuxt": "^2.1.9",
+    "eslint": "^8.57.0 || ^9.0.0",
     "nuxt": "^3.15.0",
     "shadcn-nuxt": "^0.10.4",
     "typescript": "^5.5.2",
@@ -32,6 +36,7 @@
     "vue-router": "^4.3.0"
   },
   "dependencies": {
+    "@internationalized/date": "^3.6.0",
     "@nuxtjs/color-mode": "^3.4.2",
     "@radix-icons/vue": "^1.0.0",
     "@tanstack/vue-query": "^5.51.9",
@@ -54,9 +59,11 @@
     "tailwindcss-animate": "^1.0.7",
     "vee-validate": "^4.13.1",
     "vue-chart-3": "^3.1.8",
+    "vue-multiselect": "^3.1.0",
     "vue3-markdown-it": "^1.0.10",
     "vue3-marquee": "^4.2.1",
     "zod": "^3.23.8"
   },
-  "peerDependencies": {}
+  "peerDependencies": {},
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
