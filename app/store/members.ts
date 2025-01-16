@@ -20,7 +20,6 @@ export const useMembersStore = defineStore('members', {
   },
   getters: {
     getAllMembers: (state) => {
-
       const allMemberItem:AllMember = {
         name: 'All members',
         id: -1

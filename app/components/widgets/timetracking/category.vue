@@ -1,44 +1,125 @@
 <template>
-  <div class="w-full flex gap-2">
-      <div 
-        class="bg-[#4B4ACF] transition-all duration-300 ease-in-out"
-        :style="{ width: `${category1}%` }"
-      ></div>
-      <div 
-        class="bg-[#FF7B7B] transition-all duration-300 ease-in-out"
-        :style="{ width: `${category2}%` }"
-      ></div>
-      <div 
-        class="bg-[#FFD233] transition-all duration-300 ease-in-out"
-        :style="{ width: `${category3}%` }"
-      ></div>
+  <div>
+    <vue-apex-charts
+      type="bar"
+      height="180"
+      :options="chartOptions"
+      :series="series"
+    />
   </div>
 </template>
-
 <script setup>
-import { ref, watchEffect } from 'vue'
+import { computed } from 'vue'
+import VueApexCharts from 'vue3-apexcharts'
 
-// Props for the three category percentages
 const props = defineProps({
-  category1: {
+  value1: {
     type: Number,
-    default: 45
+    required: true,
+    default: 0
   },
-  category2: {
+  value2: {
     type: Number,
-    default: 25
+    required: true,
+    default: 0
   },
-  category3: {
+  value3: {
     type: Number,
-    default: 30
+    required: true,
+    default: 0
+  },
+  title1: {
+    type: String,
+    required: true,
+    default: 'Value 1'
+  },
+  title2: {
+    type: String,
+    required: true,
+    default: 'Value 2'
+  },
+  title3: {
+    type: String,
+    required: true,
+    default: 'Value 3'
+  },
+  chartTitle: {
+    type: String,
+    default: 'Stacked Bar Chart'
   }
 })
 
-// Validate that percentages sum to 100
-watchEffect(() => {
-  const total = props.category1 + props.category2 + props.category3
-  if (total !== 100) {
-    console.warn('Warning: Category percentages should sum to 100')
+const series = computed(() => [
+  {
+    name: props.title1,
+    data: [props.value1]
+  },
+  {
+    name: props.title2,
+    data: [props.value2]
+  },
+  {
+    name: props.title3,
+    data: [props.value3]
   }
-})
+])
+
+const chartOptions = computed(() => ({
+  chart: {
+    type: 'bar',
+    stacked: true,
+    stackType: '100%',
+    toolbar: {
+      show: false
+    },
+    width: 10
+  },
+ 
+  plotOptions: {
+    bar: {
+      horizontal: true,
+      columnWidth: '100%',
+      dataLabels: {
+        total: {
+          style: {
+            fontSize: '18px',
+            fontWeight: 900
+          }
+        }
+      },
+      
+    }
+  },
+  grid: {
+    show: false,
+    yaxis: {
+      lines: {
+          show: false
+      }
+    },
+  },
+  stroke: {
+    width: 0,
+  },
+  fill: {
+    opacity: 1
+  },
+  yaxis: {
+    show: false
+  },
+  xaxis: {
+    categories: ['Time Breakdown'],
+  },
+  legend: {
+    position: 'bottom',
+    horizontalAlign: 'center'
+  },
+  colors: ['#008FFB', '#00E396', '#FEB019'],
+  dataLabels: {
+    enabled: true,
+    formatter: function (val) {
+      return val.toFixed(1) + '%'
+    }
+  }
+}))
 </script>

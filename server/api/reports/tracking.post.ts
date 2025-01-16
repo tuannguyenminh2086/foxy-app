@@ -1,5 +1,4 @@
-import { getServerSession } from '#auth'
-import qs from 'qs';
+import { getServerSession } from '#auth';
 
 export default defineEventHandler(async(event) => {
   const session = await getServerSession(event)
@@ -11,6 +10,13 @@ export default defineEventHandler(async(event) => {
   try {
     const config = useRuntimeConfig();
     const _user: any = session.user;
+    const body = await readBody(event)
+
+    const payload = {
+     ...body,
+     export_type: 'no_export',
+     groupByUser: true
+    }
 
     const requestOptions = {
       method: "POST",
@@ -18,27 +24,18 @@ export default defineEventHandler(async(event) => {
         "Content-Type": "application/json",
         Accept: 'application/json',
         Authorization: `Bearer ${_user.token}`
-      }
+      },
+      body: JSON.stringify(payload)
     };
-
-    let _params = {
-      "export_type": "no_export",
-      "groupByUser": true,
-    };
-    
-    const _qs = qs.stringify(_params, {
-            arrayFormat: 'indices',
-            encodeValuesOnly: true,
-          });
   
-    const url = `${config.cmsUrl}/api/report/create?${_qs}`;
+    const url = `${config.cmsUrl}/api/report/create`;
 
     const req = await fetch(url, requestOptions )
     const res = await req.json();
 
     if (res) {
       console.log(res)
-      return { status: 'success', data: {...res.data} }
+      return { status: 'success', data: [...res.data] }
     }
 
   } catch (error) {

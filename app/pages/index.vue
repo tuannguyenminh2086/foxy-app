@@ -1,7 +1,7 @@
 <template>
-  <LayoutContainer title="Overview" description="Team Performance">
+  <LayoutContainer title="Dashboard" description="monitor performance">
     <template #main>
-      <ModulesOverview />
+      <ModulesDashboard />
     </template>
   </LayoutContainer>
 </template>
@@ -21,7 +21,9 @@ useHead({
 export default {
   setup () {
     const membersStore = useMembersStore();
-    membersStore.fetchAll()
+    const overviewStore = useOverviewStore()
+    membersStore.fetchAll();
+    overviewStore.initialize();
     
   }
 }

@@ -13,6 +13,9 @@ export default defineNuxtPlugin(() => {
       duration: (seconds: number) => {
         return dayjs.duration( seconds, 'seconds').format('HH:mm:ss').toString();
       },
+      secondsToHours(seconds:number, decimals:number = 1) {
+        return (seconds / 3600).toFixed(decimals);
+      },
       formatDate: (msg: string, format: string = 'DD MMM, YYYY') => {
         if (msg !== '') {
           return dayjs(msg).format(format)

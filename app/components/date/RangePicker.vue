@@ -1,20 +1,31 @@
 <script setup lang="ts">
 import type { DateRange } from 'radix-vue'
 import { cn } from '@/lib/utils'
-import { CalendarDate, DateFormatter, getLocalTimeZone } from '@internationalized/date'
+import { today, DateFormatter, getLocalTimeZone } from '@internationalized/date'
 import { Calendar as CalendarIcon } from 'lucide-vue-next'
 import { type Ref, ref } from 'vue'
 
 const df = new DateFormatter('en-US', {
   dateStyle: 'medium',
 })
-
-const calendarDate = new CalendarDate(2025, 1, 20)
-
+const emit = defineEmits(['selectDate'])
+const currentDate = today(getLocalTimeZone())
 const value = ref({
-  start: calendarDate,
-  end: calendarDate.add({ days: 20 }),
+  start: currentDate.add({ days: -2 }),
+  end: currentDate.add({ days: -1 }),
 }) as Ref<DateRange>
+
+
+watch(value, (newVal) => {
+  // emit data
+  if (newVal.start && newVal.end) {
+    emit('selectDate', { 
+      start: df.format(newVal.start.toDate(getLocalTimeZone())) ,
+      end: df.format(newVal.end.toDate(getLocalTimeZone())), 
+    })
+  }
+})
+
 </script>
 
 <template>
