@@ -1,24 +1,20 @@
-import { getServerSession } from '#auth'
-
 export default defineEventHandler(async(event) => {
 
-  const session = await getServerSession(event)
+  const session = await requireUserSession(event)
 
   if (!session) {
     return { status: 'unauthenticated!' }
   }
 
-
   try {
     const config = useRuntimeConfig();
-    const _user: any = session.user;
 
     const requestOptions = {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Accept: 'application/json',
-        Authorization: `Bearer ${_user.token}`
+        Authorization: `Bearer ${session.secure.token}`
       }
     };
   

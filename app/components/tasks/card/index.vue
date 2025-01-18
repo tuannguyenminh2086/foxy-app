@@ -40,7 +40,7 @@
 <script setup lang="ts">
 import { CalendarIcon, ClockIcon, LapTimerIcon, TimerIcon } from '@radix-icons/vue';
 import type { PropType } from 'vue';
-import type { ITask } from '~/types/tasks';
+import type { ITask } from '~~/types/tasks';
 
   const props = defineProps({
     task: Object as PropType<ITask>

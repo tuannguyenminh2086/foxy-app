@@ -107,8 +107,8 @@ export const useOverviewStore = defineStore('overview', {
   },
   actions: {
     async initialize () {
-      this.start_date = dayjs().add(-2,'day').format('YYYY-MM-DD');
-      this.end_date = dayjs().add(-1,'day').format('YYYY-MM-DD');
+      this.start_date = dayjs().subtract(2,'day').format('YYYY-MM-DD');
+      this.end_date = dayjs().subtract(1).format('YYYY-MM-DD');
       const membersList = useMembersStore();
       this.selected_members = membersList.members.map(member => (member.id));
     },
@@ -120,8 +120,7 @@ export const useOverviewStore = defineStore('overview', {
       this.end_date = dayjs(end).format('YYYY-MM-DD')
     },
     async fetch (params:any) {
-
-      const { data ,status} = await useFetch('/api/reports/tracking', {
+      const {data, status } = await useFetch('/api/reports/tracking', {
         method: 'POST',
         body: {
           start_date: this.start_date,
@@ -131,6 +130,7 @@ export const useOverviewStore = defineStore('overview', {
         }
       })
 
+    
       if (status.value == 'success') {
         if(data.value) {
           const response:IResponse<Array<TaskReport>> = data.value;
@@ -138,7 +138,7 @@ export const useOverviewStore = defineStore('overview', {
         }
         
       }
-      // console.log(data, 'data');
+      
     }
   },
 

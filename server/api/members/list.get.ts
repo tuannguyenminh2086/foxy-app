@@ -1,8 +1,8 @@
-import { getServerSession } from '#auth'
+// import { getServerSession } from '#auth'
 import qs from 'qs';
 
 export default defineEventHandler(async(event) => {
-  const session = await getServerSession(event)
+  const session = await requireUserSession(event)
 
   if (!session) {
     return { status: 'unauthenticated!' }
@@ -10,14 +10,12 @@ export default defineEventHandler(async(event) => {
 
   try {
     const config = useRuntimeConfig();
-    const _user: any = session.user;
-
     const requestOptions = {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Accept: 'application/json',
-        Authorization: `Bearer ${_user.token}`
+        Authorization: `Bearer ${session.secure.token}`
       }
     };
 

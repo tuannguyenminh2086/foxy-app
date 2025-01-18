@@ -5,12 +5,18 @@ export const useAuthStore = defineStore('auth', {
     return {
       authenticated: false,
       user: null,
-      token: ''
+      permissions: [] as Array<string>
     }
   },
+  getters: {
+
+  },
   actions: {
-    async setToken (token:string) {
-      this.token = token
+    async setPermissions (payload: Array<string>) {
+      this.permissions = payload
+    },
+    async setAuth (payload: boolean) {
+      this.authenticated = payload
     }
   },
   persist: true
