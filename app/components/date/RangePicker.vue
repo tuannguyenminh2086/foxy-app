@@ -24,6 +24,7 @@ watch(value, (newVal) => {
       end: df.format(newVal.end.toDate(getLocalTimeZone())), 
     })
   }
+
 })
 
 </script>

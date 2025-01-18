@@ -1,13 +1,14 @@
 <template>
-  <div class="flex flex-col justify-center items-center ">
-      <div>
-        <img src="/assets/img/foxy-app.svg" width="40" height="40" />
+  <div class="min-w-[300px]">
+      <div class="mb-4 w-9 h-9 mx-auto">
+        <MasterHeaderLogo />
       </div>
-      <h1 class="mb-10 text-3xl font-semibold">Sign in</h1>
+      <h1 class="mb-10 text-3xl font-semibold text-center">Sign in</h1>
 
-      <form class="w-full max-w-[400px] space-y-6" @submit="onSubmit">
+      <!-- <form class="w-full block space-y-6" @submit="onSubmit"> -->
+        <form :validation-schema="formSchema" @submit="onSubmit" class="space-y-5" :validate-on-blur="!isFieldDirty">
 
-        <FormField v-slot="{ componentField }" name="username">
+        <FormField v-slot="{ componentField }" name="email">
           <FormItem>
             <FormLabel>Username</FormLabel>
             <FormControl>
@@ -30,19 +31,20 @@
             <FormMessage />
           </FormItem>
         </FormField>
-        
-        <Button type="submit" class="w-full"> Submit </Button>
-        <p class="text-destructive mt-6">{{ error }}</p>
+
+        <div class="pt-5">
+          <Button type="submit" class="w-full"> Submit </Button>
+          <p class="text-destructive mt-6">{{ error }}</p>
+        </div>
 
       </form>
 
-      <p class="mt-10 text-sm">
+      <!-- <p class="mt-10 text-sm">
         Don't have an account?
         <NuxtLink to="/" class="hover:underline"
           >Create an account</NuxtLink
         >
-      </p>
-
+      </p> -->
   </div>
 </template>
 
@@ -51,31 +53,34 @@
   import { toTypedSchema } from '@vee-validate/zod'
   import * as z from 'zod'
 
-  const { signIn } = useAuth()
-
+  const { loggedIn, user, fetch: refreshSession } = useUserSession()
   const error = ref<string | null>(null);
-
+  
   const formSchema = toTypedSchema(
     z.object({
-      username: z.string().min(2).max(50),
+      email: z.string().email().min(2).max(50),
       password: z.string().min(6).max(50),
     })
   );
 
-  const { handleSubmit } = useForm({
+  const { isFieldDirty, handleSubmit } = useForm({
     validationSchema: formSchema,
    });
 
   const onSubmit = handleSubmit(async (values) => {
-      error.value = "";
-      // console.log(values);
+        error.value = "";
 
-      const resp = await signIn('credentials', values)
-
-      if (resp) {
-        console.log(resp)
-      }
-    
+         $fetch('/api/login', {
+          method: 'POST',
+          body: values
+        })
+        .then(async () => {
+          // Refresh the session on client-side and redirect to the home page
+          await refreshSession()
+          await navigateTo('/')
+        })
+        .catch(() => error.value = 'Bad credentials')
+  
   });
 
 

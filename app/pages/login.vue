@@ -9,11 +9,7 @@
 <script setup lang="ts">
   definePageMeta({
     layout: 'auth',
-    title: 'login',
-    auth: {
-      unauthenticatedOnly: true,
-      navigateAuthenticatedTo: '/',
-    }
+    title: 'login'
   })
 
 

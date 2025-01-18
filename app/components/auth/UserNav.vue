@@ -1,10 +1,10 @@
 <template>
 
-  <DropdownMenu>
+  <DropdownMenu v-if="user">
     <DropdownMenuTrigger as-child>
       <Button variant="ghost" class="relative h-8 w-8 rounded-full">
         <Avatar class="h-8 w-8 xl:h-10 xl:w-10">
-          <AvatarImage :src="data?.user?.image ?? ''" :alt="data?.user?.name" />
+          <AvatarImage :src="user.avatar ?? ''" />
           <AvatarFallback>FX</AvatarFallback>
         </Avatar>
       </Button>
@@ -13,10 +13,10 @@
       <DropdownMenuLabel class="font-normal flex">
         <div class="flex flex-col space-y-1">
           <p class="text-sm font-medium leading-none">
-            {{ data?.user?.name }}
+            {{ user.first_name }} {{ user.last_name }}
           </p>
           <p class="text-xs leading-none text-muted-foreground">
-            {{  data?.user?.email }}
+            {{  user.email }}
           </p>
         </div>
       </DropdownMenuLabel>
@@ -36,9 +36,10 @@
 
 <script setup lang="ts">
 
-  const { data, signOut } = useAuth();
+const { user, clear: clearSession } = useUserSession();
   const signOutHandle = async () => {
-    await signOut()
+    await clearSession()
+    await navigateTo('/login')
   }
 
 </script>
