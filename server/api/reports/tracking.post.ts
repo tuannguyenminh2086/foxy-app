@@ -1,7 +1,7 @@
-import { getServerSession } from '#auth';
+
 
 export default defineEventHandler(async(event) => {
-  const session = await getServerSession(event)
+  const session = await requireUserSession(event)
 
   if (!session) {
     return { status: 'unauthenticated!' }
@@ -9,7 +9,6 @@ export default defineEventHandler(async(event) => {
 
   try {
     const config = useRuntimeConfig();
-    const _user: any = session.user;
     const body = await readBody(event)
 
     const payload = {
@@ -23,7 +22,7 @@ export default defineEventHandler(async(event) => {
       headers: {
         "Content-Type": "application/json",
         Accept: 'application/json',
-        Authorization: `Bearer ${_user.token}`
+        Authorization: `Bearer ${session.secure.token}`
       },
       body: JSON.stringify(payload)
     };
@@ -34,7 +33,6 @@ export default defineEventHandler(async(event) => {
     const res = await req.json();
 
     if (res) {
-      console.log(res)
       return { status: 'success', data: [...res.data] }
     }
 
