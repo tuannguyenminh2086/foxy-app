@@ -45,9 +45,9 @@ export default defineNuxtConfig({
 								auth: {
 									globalAppMiddleware: true,
 									//baseURL: process.env.NUXT_PUBLIC_API_URL,
-									baseURL: process.env.NUXT_AUTH_ORIGIN, // The URL of your deployed app (used for origin Check in production)
+									baseURL: process.env.NUXT_AUTH_ORIGIN,
 									provider: {
-																	type: 'authjs'
+										type: 'authjs'
 									},
 								},
 								runtimeConfig: {
@@ -56,16 +56,17 @@ export default defineNuxtConfig({
 																},
 																cmsUrl: process.env.NUXT_BACKEND_URL,
 																public: {
-																								authJs: {
-																																baseUrl: process.env.NUXT_PUBLIC_AUTH_URL, 
-																																verifyClientOnEveryRequest: true // whether to hit the /auth/session endpoint on every client request
-																								},
-																								cmsUrl: process.env.NUXT_BACKEND_URL,
-																								storageUrl: process.env.NUXT_PUBLIC_STORAGE_URL,
-																								vaporBucket: process.env.NUXT_PUBLIC_LARAVEL_VAPOR_BUCKET,
-																								pusherAppId: process.env.PUSHER_APP_ID,
-																								pusherAppKey: process.env.NUXT_PUBLIC_PUSHER_KEY,
-																								pusherAppCluster: process.env.NUXT_PUBLIC_PUSHER_CLUSTER
+																		authJs: {
+																				// baseUrl: process.env.NUXT_PUBLIC_AUTH_URL, // The URL of your deployed app (used for origin Check in production)
+																				baseUrl: process.env.NUXT_AUTH_ORIGIN, 
+																				verifyClientOnEveryRequest: true // whether to hit the /auth/session endpoint on every client request
+																		},
+																		cmsUrl: process.env.NUXT_BACKEND_URL,
+																		storageUrl: process.env.NUXT_PUBLIC_STORAGE_URL,
+																		vaporBucket: process.env.NUXT_PUBLIC_LARAVEL_VAPOR_BUCKET,
+																		pusherAppId: process.env.PUSHER_APP_ID,
+																		pusherAppKey: process.env.NUXT_PUBLIC_PUSHER_KEY,
+																		pusherAppCluster: process.env.NUXT_PUBLIC_PUSHER_CLUSTER
 																}
 								},
 								compatibilityDate: '2025-01-04'
