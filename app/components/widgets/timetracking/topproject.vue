@@ -1,7 +1,6 @@
 <template>
   <div>
     <vue-apex-charts
-      type="bar"
       :options="chartOptions"
       :series="series"
       
@@ -31,7 +30,7 @@ const chartOptions = computed(() => ({
     toolbar: {
       show: true,
       tools: {
-        download: true,
+        download: false,
         selection: false,
         zoom: false,
         zoomin: false,
@@ -43,8 +42,7 @@ const chartOptions = computed(() => ({
   },
   plotOptions: {
     bar: {
-      horizontal: true,
-      borderRadius: 4,
+      horizontal: false,
       dataLabels: {
         position: 'center'
       }
@@ -53,7 +51,7 @@ const chartOptions = computed(() => ({
   dataLabels: {
     enabled: true,
     formatter: function(val:number) {
-      return val.toFixed(2) + 'h'
+      return val + 'h'
     },
     style: {
       fontSize: '12px',
@@ -85,7 +83,7 @@ const chartOptions = computed(() => ({
   grid: {
     xaxis: {
       lines: {
-        show: true
+        show: false
       }
     }
   },

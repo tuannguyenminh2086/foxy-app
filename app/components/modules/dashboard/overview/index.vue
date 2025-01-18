@@ -1,14 +1,15 @@
 <template>
   <!---section 2-->
+
   <div class="grid grid-cols-12 gap-3 grid-flow-row-dense justify-items-stretch">
     <div class="col-span-2 flex flex-col flex-1">
       <ModulesWidget
-        title="Total spent on"
-        description="tasks"
-        note="hours">
-        <span class="text-5xl font-extrabold">
+        title="Total hours"
+        note="in general">
+        <span class="text-4xl font-bold text-primary">
           {{ $secondsToHours(totalTimeSpent ?? 0) }}
         </span>
+        <p class="text-xs text-muted-foreground">hour(s)</p>
       </ModulesWidget>
 
     </div>
@@ -30,40 +31,56 @@
     <div class="col-span-2">
       <ModulesWidget
         title="Clients"
-        description="tasks"
-        note="hour(s)">
-        <span class="text-4xl font-extrabold">
-        {{ $secondsToHours(totalTimeSpentOnClient ?? 0) }}
-      </span>
+        note="in general"
+      >
+        <span class="text-4xl font-bold text-primary">
+          {{ $secondsToHours(totalTimeSpentOnClient ?? 0) }}
+        </span>
+        <p class="text-xs text-muted-foreground">hour(s)</p>
       </ModulesWidget>
     </div>
     <div class="col-span-2">
       <ModulesWidget
         title="Internal"
-        description="tasks"
-        note="hour(s)">
-        <span class="text-4xl font-extrabold">
-        {{ $secondsToHours(totalTimeSpentOnInternal ?? 0) }}
-      </span>
+        note="in general"
+      >
+        <span class="text-4xl font-bold text-primary">
+          {{ $secondsToHours(totalTimeSpentOnInternal ?? 0) }}
+        </span>
+        <p class="text-xs text-muted-foreground">hour(s)</p>
       </ModulesWidget>
     </div>
     <div class="col-span-2">
       <ModulesWidget
         title="Non-projects"
-        description="tasks"
-        note="hour(s)">
-        <span class="text-4xl font-extrabold">
+        note="in general"
+      >
+        <span class="text-4xl font-bold text-primary">
         {{ $secondsToHours(totalTimeSpentOnNonProjects ?? 0) }}
       </span>
+      <p class="text-xs text-muted-foreground">hour(s)</p>
       </ModulesWidget>
     </div>
-    <div class="col-span-6 flex flex-col flex-1">
+    <div class="col-span-8 flex flex-col flex-1">
       <ModulesWidget
-      title="Project Hours Distribution"
+      title="All Projects distribution"
       >
-        <LazyWidgetsTimetrackingTopproject :project-data="topTenProjectByTimeSpent" />
+        <div>
+          <WidgetsProjectsSummaryTable :data="projectsAnalysis.projects"/>
+        </div>
       </ModulesWidget>
     </div>
+    <div class="col-span-4 flex flex-col flex-1">
+      <ModulesWidget
+      title="Top projects distribution"
+      >
+        <LazyWidgetsTimetrackingTopprojectbyhours :data="projectsAnalysis" />
+      </ModulesWidget>
+
+      </div>
+      <div class="col-span-12">
+       
+      </div>
   </div>
 </template>
 
@@ -71,7 +88,7 @@
 import { useOverviewStore } from '~/store/overview';
 
 const overviewStore = useOverviewStore()
-const { totalTimeSpent, totalTimeSpentOnClient, totalTimeSpentOnInternal,totalTimeSpentOnNonProjects, topTenProjectByTimeSpent } = storeToRefs(overviewStore)
+const { totalTimeSpent, totalTimeSpentOnClient, totalTimeSpentOnInternal,totalTimeSpentOnNonProjects, topTenProjectByTimeSpent, projectsAnalysis } = storeToRefs(overviewStore)
 
 </script>
 

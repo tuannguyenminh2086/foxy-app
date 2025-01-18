@@ -17,8 +17,7 @@ export default defineNuxtConfig({
 				 "@nuxt/fonts",
 				 "@sidebase/nuxt-auth",
 				 "dayjs-nuxt",
-				 '@nuxt/eslint',
-				 '@nuxt/image'
+				 '@nuxt/eslint'
 				],
 				shadcn: {
 								prefix: '',

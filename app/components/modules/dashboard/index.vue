@@ -3,7 +3,9 @@
     <div
       class="grid grid-cols-12 gap-3"
     >
-      <div class="col-span-4"></div>
+      <div class="col-span-4">
+        <WidgetsMembersPicked />
+      </div>
       <div class="col-span-6 flex justify-end space-x-2">
         <DateRangePicker @select-date="selectDateHandle" />
         <MembersPicker @select-members="selectMembersHandle" />
@@ -19,7 +21,7 @@
         <TabsTrigger value="overview">
           Overview
         </TabsTrigger>
-        <TabsTrigger value="team">
+        <!-- <TabsTrigger value="team">
           Team
         </TabsTrigger>
         <TabsTrigger value="task">
@@ -27,20 +29,20 @@
         </TabsTrigger>
         <TabsTrigger value="project">
           Projects
-        </TabsTrigger>
+        </TabsTrigger> -->
       
       </TabsList>
 
       <TabsContent value="overview">
         <ModulesDashboardOverview />
       </TabsContent>
-      <TabsContent value="project">
+      <TabsContent value="team">
         <ModulesDashboardTeam />
       </TabsContent>
       <TabsContent value="task">
         Change your password here.
       </TabsContent>
-      <TabsContent value="team">
+      <TabsContent value="project">
         Change your password here.
       </TabsContent>
   </Tabs>
