@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col justify-center items-center ">
       <div>
-        <NuxtImg src="/assets/img/foxy-app.svg" width="40" height="40" />
+        <img src="/assets/img/foxy-app.svg" width="40" height="40" />
       </div>
       <h1 class="mb-10 text-3xl font-semibold">Sign in</h1>
 

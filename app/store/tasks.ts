@@ -62,7 +62,7 @@ export const useTasksStore = defineStore('tasks', {
         }
       })
 
-      console.log(data)
+      // console.log(data)
     }
   },
   persist: true
