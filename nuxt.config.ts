@@ -51,12 +51,12 @@ export default defineNuxtConfig({
 								},
 								runtimeConfig: {
 																authJs: {
-																								secret: process.env.NUXT_NEXTAUTH_SECRET, // You can generate one with `openssl rand -base64 32`
+																	secret: process.env.NUXT_NEXTAUTH_SECRET, // You can generate one with `openssl rand -base64 32`
 																},
 																cmsUrl: process.env.NUXT_BACKEND_URL,
 																public: {
 																								authJs: {
-																																baseUrl: process.env.NUXT_PUBLIC_AUTH_URL, // The URL of your deployed app (used for origin Check in production)
+																																baseUrl: process.env.AUTH_ORIGIN, // The URL of your deployed app (used for origin Check in production)
 																																verifyClientOnEveryRequest: true // whether to hit the /auth/session endpoint on every client request
 																								},
 																								cmsUrl: process.env.NUXT_BACKEND_URL,
