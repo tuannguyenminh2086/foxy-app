@@ -2,7 +2,7 @@
   <div class="flex items-center"> 
     <Vue3Marquee :pause-on-hover="true" :clone="true">
       <div v-for="(item, key) in events" class="px-5" :key="key">
-          <h3 class="font-bold">{{  item.name }}</h3>
+          <h3 class="font-bold text-sm">{{  item.name }}</h3>
       </div>
     </Vue3Marquee>
   </div>

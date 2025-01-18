@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-screen w-full">
+  <div class="flex flex-col h-full w-full bg-gray-50 dark:bg-black">
     <MasterHeader />
     <main id="main" class="relative p-5 pt-10 antialiased ">
       <div class="max-w-[1440px] mx-auto flex-1">

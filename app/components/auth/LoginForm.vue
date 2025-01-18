@@ -68,7 +68,7 @@
 
   const onSubmit = handleSubmit(async (values) => {
       error.value = "";
-      console.log(values);
+      // console.log(values);
 
       const resp = await signIn('credentials', values)
 
