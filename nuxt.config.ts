@@ -43,12 +43,12 @@ export default defineNuxtConfig({
 								},
 
 								auth: {
-																globalAppMiddleware: true,
-																//baseURL: process.env.NUXT_PUBLIC_API_URL,
-																baseURL: process.env.AUTH_ORIGIN,
-																provider: {
-																								type: 'authjs'
-																},
+									globalAppMiddleware: true,
+									//baseURL: process.env.NUXT_PUBLIC_API_URL,
+									baseURL: process.env.NUXT_AUTH_ORIGIN,
+									provider: {
+																	type: 'authjs'
+									},
 								},
 								runtimeConfig: {
 																authJs: {
