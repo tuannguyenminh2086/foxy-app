@@ -45,7 +45,7 @@ export default defineNuxtConfig({
 								auth: {
 									globalAppMiddleware: true,
 									//baseURL: process.env.NUXT_PUBLIC_API_URL,
-									baseURL: process.env.NUXT_AUTH_ORIGIN,
+									baseURL: process.env.NUXT_AUTH_ORIGIN, // The URL of your deployed app (used for origin Check in production)
 									provider: {
 																	type: 'authjs'
 									},
@@ -54,14 +54,10 @@ export default defineNuxtConfig({
 																authJs: {
 																	secret: process.env.NUXT_NEXTAUTH_SECRET, // You can generate one with `openssl rand -base64 32`
 																},
-																authOrigin: {
-
-																},
 																cmsUrl: process.env.NUXT_BACKEND_URL,
 																public: {
 																								authJs: {
-																																// baseUrl: process.env.NUXT_PUBLIC_AUTH_URL, // The URL of your deployed app (used for origin Check in production)
-																																baseUrl: process.env.AUTH_ORIGIN, 
+																																baseUrl: process.env.NUXT_PUBLIC_AUTH_URL, 
 																																verifyClientOnEveryRequest: true // whether to hit the /auth/session endpoint on every client request
 																								},
 																								cmsUrl: process.env.NUXT_BACKEND_URL,
