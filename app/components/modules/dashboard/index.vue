@@ -6,11 +6,9 @@
       <div class="col-span-5">
         <WidgetsMembersPicked />
       </div>
-      <div class="col-span-6 flex justify-end space-x-2">
+      <div class="col-span-7 flex justify-end space-x-2">
         <DateRangePicker @select-date="selectDateHandle" />
         <MembersPicker @select-members="selectMembersHandle" />
-      </div>
-      <div class="col-span-1 space-x-2 flex justify-end">
         <Button @click.prevent="queryData">Query Data</Button>
       </div>
     </div>
@@ -20,10 +18,10 @@
         <TabsTrigger value="overview">
           Overview
         </TabsTrigger>
-        <!-- <TabsTrigger value="team">
+        <TabsTrigger value="team">
           Team
         </TabsTrigger>
-        <TabsTrigger value="task">
+        <!-- <TabsTrigger value="task">
           Tasks
         </TabsTrigger>
         <TabsTrigger value="project">
