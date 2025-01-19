@@ -19,8 +19,8 @@ export const useOverviewStore = defineStore('overview', {
   state:():OverviewState => {
     return {
       excludedClientIds: [152, 2],
-      start_date: '',
-      end_date: '',
+      start_date: dayjs().subtract(2,'day').format('YYYY-MM-DD'),
+      end_date: dayjs().subtract(1, 'day').format('YYYY-MM-DD'),
       selected_members: [],
       raw_data: []
     }
@@ -108,7 +108,7 @@ export const useOverviewStore = defineStore('overview', {
   actions: {
     async initialize () {
       this.start_date = dayjs().subtract(2,'day').format('YYYY-MM-DD');
-      this.end_date = dayjs().subtract(1).format('YYYY-MM-DD');
+      this.end_date = dayjs().subtract(1, 'day').format('YYYY-MM-DD');
       const membersList = useMembersStore();
       this.selected_members = membersList.members.map(member => (member.id));
     },
