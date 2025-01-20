@@ -63,7 +63,7 @@
     </div>
     <div class="col-span-8 flex flex-col flex-1">
       <ModulesWidget
-      title="All Projects distribution"
+      title="All Client's Projects distribution"
       >
         <div>
           <WidgetsProjectsSummaryTable :data="projectsAnalysis.projects"/>
@@ -72,15 +72,16 @@
     </div>
     <div class="col-span-4 flex flex-col flex-1">
       <ModulesWidget
-      title="Top projects distribution"
+      title="Top 5 Client's projects distribution"
       >
         <LazyWidgetsTimetrackingTopprojectbyhours :data="projectsAnalysis" />
       </ModulesWidget>
 
-      </div>
-      <div class="col-span-12">
-       
-      </div>
+    </div>
+
+    <div class="col-span-12">
+      <LazyWidgetsTasksAnalysis />
+    </div>
   </div>
 </template>
 

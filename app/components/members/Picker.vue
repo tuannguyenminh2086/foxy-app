@@ -5,7 +5,6 @@
         variant="outline"
         role="combobox"
         :aria-expanded="open"
-        class="w-[200px] justify-between"
       >
         <Users class="mr-1 h-4 w-4 shrink-0 opacity-50" />
         {{ selectedNumbers.length > 0 ?  selectedNumbers.includes(-1) ? "All members":  selectedNumbers.length + "&nbsp;member(s)"  : "Pick member(s)" }}
