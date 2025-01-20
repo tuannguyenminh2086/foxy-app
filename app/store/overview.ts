@@ -19,7 +19,7 @@ export const useOverviewStore = defineStore('overview', {
   state:():OverviewState => {
     return {
       excludedClientIds: [152, 2],
-      start_date: dayjs().subtract(2,'day').format('YYYY-MM-DD'),
+      start_date: dayjs().subtract(6,'day').format('YYYY-MM-DD'),
       end_date: dayjs().subtract(1, 'day').format('YYYY-MM-DD'),
       selected_members: [],
       raw_data: []
@@ -81,15 +81,9 @@ export const useOverviewStore = defineStore('overview', {
         memberCount: _.uniqBy(tasks, 'member').length,
         taskCount: tasks.length,
         averageTaskDuration: Number((_.meanBy(tasks, 'total_spent'))),
-        // startDate: _.minBy(tasks, '_date')?.due_date,
-        // endDate: _.maxBy(tasks, 'due_date')?.due_date
       }))
       .orderBy(['totalHours'], ['desc'])
       .value()
-
-      // console.log(projectAnalysis)
-
-
       return {
         projects: projectAnalysis,
         summary: {
@@ -100,6 +94,36 @@ export const useOverviewStore = defineStore('overview', {
         }
       }
     },
+    teamWorkloadAnalysis: (state) => {
+      const filteredData = state.raw_data.filter(item => !state.excludedClientIds.includes(item.client_id));
+
+      const teamAnalysis = _(filteredData).groupBy('member')
+      .map((tasks, member) => ({
+        member,
+        totalHours: Number((_.sumBy(tasks, 'total_spent') / 3600).toFixed(2)),
+        projectCount: _.uniqBy(tasks, 'project').length,
+        projects: _.uniqBy(tasks, 'project').map(t => t.project),
+        taskCount: tasks.length,
+        averageTaskDuration: Number((_.meanBy(tasks, 'total_spent') / 3600).toFixed(2)),
+        activeProjects: _.uniqBy(
+          tasks.filter(t => t.state < 5),
+          'project'
+        ).length
+      }))
+      .orderBy(['totalHours'], ['desc'])
+      .value()
+
+      return {
+        members: teamAnalysis,
+        summary: {
+          totalMembers: teamAnalysis.length,
+          averageProjectsPerMember: _.meanBy(teamAnalysis, 'projectCount'),
+          mostDiverseMembers: _.orderBy(teamAnalysis, ['projectCount'], ['desc']).slice(0, 3),
+          mostFocusedMembers: _.orderBy(teamAnalysis, ['projectCount'], ['asc']).slice(0, 3)
+        }
+      };
+
+    },
     memberPickedList: (state) => {
       const membersList = useMembersStore();
       return membersList.members.filter(member => state.selected_members.includes(member.id));
@@ -107,7 +131,7 @@ export const useOverviewStore = defineStore('overview', {
   },
   actions: {
     async initialize () {
-      this.start_date = dayjs().subtract(2,'day').format('YYYY-MM-DD');
+      this.start_date = dayjs().subtract(6,'day').format('YYYY-MM-DD');
       this.end_date = dayjs().subtract(1, 'day').format('YYYY-MM-DD');
       const membersList = useMembersStore();
       this.selected_members = membersList.members.map(member => (member.id));
@@ -120,7 +144,7 @@ export const useOverviewStore = defineStore('overview', {
       this.end_date = dayjs(end).format('YYYY-MM-DD')
     },
     async fetch (params:any) {
-      const {data, status } = await useFetch('/api/reports/tracking', {
+      const ret = await $fetch('/api/reports/tracking', {
         method: 'POST',
         body: {
           start_date: this.start_date,
@@ -129,11 +153,10 @@ export const useOverviewStore = defineStore('overview', {
           ...params
         }
       })
-
     
-      if (status.value == 'success') {
-        if(data.value) {
-          const response:IResponse<Array<TaskReport>> = data.value;
+      if (ret && ret.status == 'success') {
+        if ('data' in ret) {
+          const response:IResponse<Array<TaskReport>> = ret;
           this.raw_data = response.data ?? [];
         }
         

@@ -11,7 +11,7 @@ const df = new DateFormatter('en-US', {
 const emit = defineEmits(['selectDate'])
 const currentDate = today(getLocalTimeZone())
 const value = ref({
-  start: currentDate.add({ days: -2 }),
+  start: currentDate.add({ days: -6 }),
   end: currentDate.add({ days: -1 }),
 }) as Ref<DateRange>
 
