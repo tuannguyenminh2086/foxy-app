@@ -11,7 +11,9 @@ interface OverviewState {
   start_date: string;
   end_date: string;
   raw_data: TaskReport[],
-  excludedClientIds: number[]
+  excludedClientIds: number[],
+  isLoading: boolean,
+  error: string | null;
 }
 
 
@@ -22,23 +24,33 @@ export const useOverviewStore = defineStore('overview', {
       start_date: dayjs().subtract(6,'day').format('YYYY-MM-DD'),
       end_date: dayjs().subtract(1, 'day').format('YYYY-MM-DD'),
       selected_members: [],
-      raw_data: []
+      raw_data: [],
+      isLoading: false,
+      error: null
     }
   },
   getters: {
+    memberPickedList: (state) => {
+      const membersList = useMembersStore();
+      return membersList.members.filter(member => state.selected_members.includes(member.id));
+    },
+    filteredClientData(state): TaskReport[] {
+      return state.raw_data.filter(item => !this.excludedClientIds.includes(item.client_id));
+    },
+    filteredInternalData(): TaskReport[] {
+      return this.raw_data.filter(item => this.excludedClientIds.includes(item.client_id));
+    },
     totalTimeSpent: (state) => {
       return state.raw_data.reduce((accumulator:number, currentValue:TaskReport) => accumulator + currentValue.total_spent, 0)
     },
     getRawData: (state) =>{
       return state.raw_data;
     },
-    totalTimeSpentOnClient: (state) => {
-      const filteredData = state.raw_data.filter(item => !state.excludedClientIds.includes(item.client_id));
-      return filteredData.reduce((accumulator:number, currentValue:TaskReport) => accumulator + currentValue.total_spent, 0)
+    totalTimeSpentOnClient(state) {
+      return _.sumBy(state.raw_data.filter(item => !state.excludedClientIds.includes(item.client_id)), 'total_spent');
     },
-    totalTimeSpentOnInternal: (state) => {
-      const filteredData = state.raw_data.filter(item => state.excludedClientIds.includes(item.client_id));
-      return filteredData.reduce((accumulator:number, currentValue:TaskReport) => accumulator + currentValue.total_spent, 0)
+    totalTimeSpentOnInternal (state) {
+      return _.sumBy(state.raw_data.filter(item => state.excludedClientIds.includes(item.client_id)), 'total_spent');
     },
     totalTimeSpentOnNonProjects: (state) => {
       const filteredData = state.raw_data.filter(item => !item.project || !item.client );
@@ -53,6 +65,7 @@ export const useOverviewStore = defineStore('overview', {
           const project_name = item.project ?? 'n/a';
           projectSummary[project_name] = {
             name: project_name,
+            pid: item.project_id,
             hours: 0
           };
           projectSummary[project_name].hours += item.total_spent;
@@ -118,15 +131,68 @@ export const useOverviewStore = defineStore('overview', {
         summary: {
           totalMembers: teamAnalysis.length,
           averageProjectsPerMember: _.meanBy(teamAnalysis, 'projectCount'),
-          mostDiverseMembers: _.orderBy(teamAnalysis, ['projectCount'], ['desc']).slice(0, 3),
-          mostFocusedMembers: _.orderBy(teamAnalysis, ['projectCount'], ['asc']).slice(0, 3)
+          mostDiverseMembers: _.orderBy(teamAnalysis, ['projectCount'], ['desc']).slice(0, 5),
+          mostFocusedMembers: _.orderBy(teamAnalysis, ['projectCount'], ['asc']).slice(0, 5)
         }
       };
 
     },
-    memberPickedList: (state) => {
-      const membersList = useMembersStore();
-      return membersList.members.filter(member => state.selected_members.includes(member.id));
+   
+    // Team Overview
+    taskStateAnalysis (state) {      
+      const filteredTasks = state.raw_data.filter(item => !state.excludedClientIds.includes(item.client_id));
+      const stateStats: { [key: number]: { count: number; totalSpent: number; tasks: TaskReport[] } } = {};
+
+      filteredTasks.forEach(task => {
+
+        if (!stateStats[task.state]) {
+          stateStats[task.state] = {
+            count: 0,
+            totalSpent: 0,
+            tasks: []
+          };
+        }
+
+        stateStats[task.state]!.count++;
+        stateStats[task.state]!.totalSpent += task.total_spent;
+        stateStats[task.state]!.tasks.push(task);
+      });
+
+      // Calculate percentages and averages
+      const totalTasks = filteredTasks.length;
+      const stateResults = Object.entries(stateStats).map(([state, stats]) => ({
+        state: parseInt(state),
+        count: stats.count,
+        percentage: (stats.count / totalTasks * 100).toFixed(1),
+        avgTimeSpent: (stats.totalSpent / stats.count)
+      }));
+
+      // Calculate overall productivity stats
+      const totalTimeSpent = filteredTasks.reduce((sum, task) => sum + task.total_spent, 0);
+      const totalEstTime = filteredTasks.reduce((sum, task) => sum + (task.est_time || 0), 0);
+      const completedTasks = filteredTasks.filter(task => task.state === 5).length;
+
+      const productivityStats = {
+        avgTimePerTask: (totalTimeSpent / totalTasks),
+        completionRate: ((completedTasks / totalTasks) * 100).toFixed(1),
+        timeEfficiency: totalEstTime ? ((totalTimeSpent / totalEstTime) * 100).toFixed(1) : 'N/A'
+      };
+
+      const stateNames = {
+        1: 'New',
+        2: 'In Progress',
+        3: 'Review',
+        4: 'Testing',
+        5: 'Completed'
+      };
+
+      return {
+        stateResults: stateResults.map(state => ({
+          ...state,
+          name: stateNames[state.state as keyof typeof stateNames]
+        })),
+        productivityStats
+      };
     }
   },
   actions: {
@@ -163,7 +229,9 @@ export const useOverviewStore = defineStore('overview', {
       }
       
     }
-  },
+  },  
 
-  persist: true
+  persist: {
+    pick: ['selected_members', 'start_date', 'end_date', 'excludedClientIds']
+  }
 })

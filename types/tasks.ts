@@ -62,3 +62,11 @@ export interface ITrackingTask {
 }
 
 export type TState = 1 | 2 | 3 | 4
+
+export enum TASK_STATES {
+  New = 1,
+  InProgress = 2,
+  Review = 3,
+  Testing = 4,
+  Completed = 5
+};

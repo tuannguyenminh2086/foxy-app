@@ -29,10 +29,10 @@
           <CardHeader>
             <CardTitle>Most Diverse Members</CardTitle>
           </CardHeader>
-          <CardContent class="pt-0">
+          <CardContent class="pt-5">
             <ol class="space-y-2">
               <li v-for="member in teamWorkloadAnalysis.summary.mostDiverseMembers" class="border-b pb-4 last:border-0">
-                <p class="text-lg font-bold text-primary">{{ member.member }}</p>
+                <p class="text-lg font-bold text-primary leading-none mb-2">{{ member.member }}</p>
                 <p class="text-xs">{{ member.totalHours }} hour(s)</p>
                 <p class="text-xs text-muted-foreground">{{ member.activeProjects }} project(s) </p>
               </li>
@@ -44,10 +44,10 @@
           <CardHeader>
             <CardTitle>Most Focus <br/>Members</CardTitle>
           </CardHeader>
-          <CardContent class="pt-0">
+          <CardContent class="pt-5">
             <ol class="space-y-2">
               <li v-for="member in teamWorkloadAnalysis.summary.mostFocusedMembers" class="border-b pb-4 last:border-0">
-                <p class="text-lg font-bold text-primary">{{ member.member }}</p>
+                <p class="text-lg font-bold text-primary leading-none mb-2">{{ member.member }}</p>
                 <p class="text-xs">{{ member.totalHours }} hour(s)</p>
                 <p class="text-xs text-muted-foreground">{{ member.activeProjects }} project(s)</p>
               </li>
