@@ -1,6 +1,6 @@
 <template>
-  <div class="flex -space-x-4">
-    <Avatar v-for="item in memberPickedList" class="border-2">
+  <div v-if="memberPickedList" class="flex -space-x-2">
+    <Avatar v-for="(item, key) in memberPickedList" class="relative border-2 w-10 h-10" key="item.id">
       <AvatarImage :src="item.avatar" :alt="item.first_name + '' +  item.last_name" />
       <AvatarFallback>CN</AvatarFallback>
     </Avatar>
