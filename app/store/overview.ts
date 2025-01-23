@@ -5,6 +5,8 @@ import { useMembersStore } from './members'
 import type { IResponse } from "~~/types/common";
 import type { TaskReport } from "~/lib/zod/report";
 import type { ProjectSummary, ProjectSummaryItem } from "~/lib/types";
+import DueDateStats from "~/components/widgets/tasks/dueDateStats.vue";
+import type { DueStatus } from "~~/types/tasks";
 
 interface OverviewState {
   selected_members: number[],
@@ -193,6 +195,42 @@ export const useOverviewStore = defineStore('overview', {
         })),
         productivityStats
       };
+    },
+    dueDateAnalysis (state) {
+      const now = new Date();
+      const oneWeek = 7 * 24 * 60 * 60 * 1000;
+      const filteredTasks = state.raw_data.filter(item => !state.excludedClientIds.includes(item.client_id) && item.state !== 5).map(task => ({
+          task_id: task.task_id,
+          task: task.task,
+          state: task.state,
+          est_time: task.est_time,
+          client_id: task.client_id,
+          client: task.client,
+          total_spent: task.total_spent,
+          member: task.member,
+          due_date: task.due_date
+        }));
+
+        return filteredTasks.reduce((acc: DueStatus, task) => {
+          if (!task.due_date) {
+            acc.incoming.push(task);
+            return acc;
+          }
+    
+          const dueDate = new Date(task.due_date);
+          const timeRemaining = dueDate.getTime() - now.getTime();
+    
+          if (timeRemaining < 0) {
+            acc.overdue.push(task);
+          } else if (timeRemaining <= oneWeek) {
+            acc.dueSoon.push(task);
+          } else {
+            acc.incoming.push(task);
+          }
+    
+          return acc;
+        }, { overdue: [], dueSoon: [], incoming: [] });
+
     }
   },
   actions: {

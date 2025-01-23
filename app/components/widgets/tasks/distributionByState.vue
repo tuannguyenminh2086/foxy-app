@@ -3,7 +3,7 @@
     title="Task Distribution"
     description="by State"
   >
-    <div class="flex justify-center">
+    <div class="">
       <vue-apex-charts
         :options="options"
         :series="series" 
@@ -30,23 +30,57 @@
 
   const props = defineProps<Props>();
 
+  // const options = computed(() => ({
+  //   chart: {
+  //     type: 'donut',
+  //     id: 'apexchart-task-distribution-by-state',
+  //     height: 300
+  //   },
+  //   labels: props.data.map( (item) => item.name),
+  //   legend: {
+  //     position: 'bottom'
+  //   },
+  //   colors: ['#008FFB', '#00E396', '#FEB019', '#FF4560', '#775DD0'],
+  
+   
+  // }))
+
+  // const series = computed(() => {
+  //   return props.data.map((item) => item.count)
+  // });
+
   const options = computed(() => ({
     chart: {
-      type: 'donut',
+      type: 'bar',
       id: 'apexchart-task-distribution-by-state',
-      height: 350
+      height: 350,
+      toolbar: {
+        show: false
+      }
     },
-    labels: props.data.map( (item) => item.name),
+    plotOptions: {
+      bar: {
+        borderRadiusApplication: 'end',
+        horizontal: true,
+        width: '100%',
+      },
+      
+    },
+    dataLabels: {
+      enabled: false
+    },
+    xaxis: {
+      categories: props.data.map( (item) => item.name)
+    },
     legend: {
       position: 'bottom'
     },
-    colors: ['#008FFB', '#00E396', '#FEB019', '#FF4560', '#775DD0'],
-  
-   
   }))
 
   const series = computed(() => {
-    return props.data.map((item) => item.count)
+    return [{
+      data: props.data.map((item) => item.count)
+    }]
   });
 
 </script>
