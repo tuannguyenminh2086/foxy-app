@@ -4,7 +4,7 @@
     description=""
   >
 
-    <div class="space-y-4 mt-4">      
+    <div class="grid grid-cols-3 mt-4 gap-4">      
       <Card  v-if="taskStateAnalysis.productivityStats.avgTimePerTask" >
         <CardHeader>
           <CardTitle>av. Hour(s)</CardTitle>
