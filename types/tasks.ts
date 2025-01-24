@@ -63,10 +63,29 @@ export interface ITrackingTask {
 
 export type TState = 1 | 2 | 3 | 4
 
-export enum TASK_STATES {
+export enum TaskState {
   New = 1,
   InProgress = 2,
   Review = 3,
   Testing = 4,
   Completed = 5
 };
+
+export interface TaskStats {
+  task_id: number;
+  task: string;
+  state: TaskState;
+  est_time: number | null;
+  client_id: number;
+  client: string;
+  total_spent: number;
+  member: string;
+  due_date: string | null;
+}
+
+
+export interface DueStatus {
+  overdue: TaskStats[];
+  dueSoon: TaskStats[];
+  incoming: TaskStats[];
+}
