@@ -61,6 +61,7 @@ watch(value, (newVal) => {
         <RangeCalendar
           v-model="value"
           weekday-format="short"
+          :max-value="today(getLocalTimeZone()).add({ days: -1 })"
           :number-of-months="2"
           initial-focus
           :placeholder="value.start"

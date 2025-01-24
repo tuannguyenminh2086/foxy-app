@@ -1,32 +1,37 @@
 <template>
-  <div class="space-y-10">
-    <div>
-      <vue-apex-charts
-        :options="donutChartOptions"
-        :series="donutChartSeries" 
-      />
+  <ModulesWidget
+      title="Top 5 Client's projects distribution"
+      >
+      <div class="space-y-10">
+        <div>
+          <vue-apex-charts
+            :options="donutChartOptions"
+            :series="donutChartSeries" 
+          />
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <Card  v-if="data.summary.totalProjects">
+              <CardHeader>
+                <CardTitle>Total Projects</CardTitle>
+              </CardHeader>
+              <CardContent class="pt-0">
+                <p class="text-4xl font-bold text-primary">{{ data.summary.totalProjects }}</p>
+                <p class="text-xs text-muted-foreground">In general</p>
+              </CardContent>
+            </Card> 
+            <Card  v-if="data.summary.averageProjectDuration" >
+              <CardHeader>
+                <CardTitle>Project Duration</CardTitle>
+              </CardHeader>
+              <CardContent class="pt-0">
+                <p class="text-2xl font-bold text-primary">{{ $secondsToHours(data.summary.averageProjectDuration) }}</p>
+                <p class="text-xs text-muted-foreground">avg. hour(s)</p>
+              </CardContent>
+            </Card>
+        </div>
     </div>
-    <div class="grid grid-cols-2 gap-4">
-      <Card  v-if="data.summary.totalProjects">
-          <CardHeader>
-            <CardTitle>Total Projects</CardTitle>
-          </CardHeader>
-          <CardContent class="pt-0">
-            <p class="text-4xl font-bold text-primary">{{ data.summary.totalProjects }}</p>
-            <p class="text-xs text-muted-foreground">In general</p>
-          </CardContent>
-        </Card> 
-        <Card  v-if="data.summary.averageProjectDuration" >
-          <CardHeader>
-            <CardTitle>Project Duration</CardTitle>
-          </CardHeader>
-          <CardContent class="pt-0">
-            <p class="text-2xl font-bold text-primary">{{ $secondsToHours(data.summary.averageProjectDuration) }}</p>
-            <p class="text-xs text-muted-foreground">avg. hour(s)</p>
-          </CardContent>
-        </Card>
-    </div>
-</div>
+</ModulesWidget>
+
 </template>
 
 <script setup lang="ts">

@@ -1,5 +1,5 @@
 <template>
-  <Card class="h-full">
+  <Card class="h-full relative">
     <CardHeader v-if="title">
       <CardTitle>{{title  }}</CardTitle>
       <CardDescription v-if="description">{{  description }}</CardDescription>

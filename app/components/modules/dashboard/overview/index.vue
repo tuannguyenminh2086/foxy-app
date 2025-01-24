@@ -6,7 +6,7 @@
       <ModulesWidget
         title="Total hours"
         note="in general">
-        <span class="text-4xl font-bold text-primary">
+        <span class="text-5xl font-bold text-primary">
           {{ $secondsToHours(totalTimeSpent ?? 0) }}
         </span>
         <p class="text-xs text-muted-foreground">hour(s)</p>
@@ -33,7 +33,7 @@
         title="Clients"
         note="in general"
       >
-        <span class="text-4xl font-bold text-primary">
+        <span class="text-5xl font-bold text-primary">
           {{ $secondsToHours(totalTimeSpentOnClient ?? 0) }}
         </span>
         <p class="text-xs text-muted-foreground">hour(s)</p>
@@ -44,7 +44,7 @@
         title="Internal"
         note="in general"
       >
-        <span class="text-4xl font-bold text-primary">
+        <span class="text-5xl font-bold text-primary">
           {{ $secondsToHours(totalTimeSpentOnInternal ?? 0) }}
         </span>
         <p class="text-xs text-muted-foreground">hour(s)</p>
@@ -55,7 +55,7 @@
         title="Non-projects"
         note="in general"
       >
-        <span class="text-4xl font-bold text-primary">
+        <span class="text-5xl font-bold text-primary">
         {{ $secondsToHours(totalTimeSpentOnNonProjects ?? 0) }}
       </span>
       <p class="text-xs text-muted-foreground">hour(s)</p>
@@ -63,38 +63,30 @@
     </div>
     
     
-    <div class="col-span-6">
+    <div class="col-span-4">
       <LazyWidgetsTasksDistributionByState :data="taskStateAnalysis.stateResults" />
     </div>
-    <div class="col-span-6">
+    <div class="col-span-4">
        <LazyWidgetsTasksDueDateStats :data="dueDateAnalysis" />
     </div>
-    <div class="col-span-6">
+    <div class="col-span-4">
       <LazyWidgetsTasksAvTimeSpent :data="taskStateAnalysis.stateResults" />
     </div>
-    <div class="col-span-6">
+    <div class="col-span-12">
       <LazyWidgetsTasksProductivityStats />
     </div>
     
     <div class="col-span-8 flex flex-col flex-1">
-      <ModulesWidget
-      title="All Client's Projects distribution"
-      >
-        <div>
-          <WidgetsProjectsSummaryTable :data="projectsAnalysis.projects"/>
-        </div>
-      </ModulesWidget>
+    
+        <WidgetsProjectsSummaryTable :data="projectsAnalysis.projects"/>
+  
     </div>
     <div class="col-span-4 flex flex-col flex-1">
-      <ModulesWidget
-      title="Top 5 Client's projects distribution"
-      >
+     
         <LazyWidgetsTimetrackingTopprojectbyhours :data="projectsAnalysis" />
-      </ModulesWidget>
-
+    
     </div>    
 
-  
   </div>
 </template>
 
