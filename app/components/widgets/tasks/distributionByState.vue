@@ -75,6 +75,9 @@
     legend: {
       position: 'bottom'
     },
+    grid: {
+      show: false
+    },
   }))
 
   const series = computed(() => {
