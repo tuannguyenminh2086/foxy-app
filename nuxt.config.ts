@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 	devtools: { enabled: true },
+	experimental: { appManifest: false },
 	future: {
 		compatibilityVersion: 4
 	},
@@ -37,6 +38,7 @@ export default defineNuxtConfig({
 	colorMode: {
 		classSuffix: ''
 	},
+	css: ['~/assets/css/main.css'],
 	dayjs: {
 		plugins: ['relativeTime', 'utc', 'timezone', 'localeData'],
 	},

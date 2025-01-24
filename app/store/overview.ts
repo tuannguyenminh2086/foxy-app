@@ -231,6 +231,21 @@ export const useOverviewStore = defineStore('overview', {
           return acc;
         }, { overdue: [], dueSoon: [], incoming: [] });
 
+    },
+    calculateTeamEfficiency(state)  {
+      const filteredTasks = state.raw_data.filter(item => !state.excludedClientIds.includes(item.client_id));
+      const completedTasks = filteredTasks.filter(task => task.state === 4 || task.state === 5);
+      const tasksWithEstimates = filteredTasks.filter(task => task.est_time > 0);
+
+      return {
+        completionRate: completedTasks.length / filteredTasks.length,
+        estimateAccuracy: tasksWithEstimates.length > 0 
+          ? _.meanBy(tasksWithEstimates, task => 
+              Math.abs(1 - (task.total_spent / task.est_time))) : 0,
+        averageCycleTime: completedTasks.length > 0 ? ((_.meanBy(completedTasks, 'total_spent') / 3600) * 100).toFixed(1): 0,
+        throughput: completedTasks.length / 
+          (filteredTasks && filteredTasks.length > 0 && filteredTasks[0] && filteredTasks[0].due_date ? Math.ceil((new Date().getTime() - new Date(filteredTasks[0].due_date).getTime()) / (1000 * 60 * 60 * 24)) : 1)
+      };
     }
   },
   actions: {

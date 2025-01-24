@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <ModulesWidget
+      title="All Client's Projects distribution"
+      >
+        
     <div class="flex items-center py-4">
       <Input
         class="max-w-sm"
@@ -91,8 +94,7 @@
       </div>
     </div>
     
-  </div>
- 
+ </ModulesWidget>
 </template>
 
 <script setup lang="ts">

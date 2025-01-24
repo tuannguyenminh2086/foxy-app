@@ -9,13 +9,17 @@
         :series="series" 
       
       />
-    
+      
+      <Button variant="ghost" size="icon" class="absolute top-2 right-2">
+        <EyeOpenIcon class="w-4 h-4" />
+      </Button>
     </div>
   </ModulesWidget>
 </template>
 
 <script setup lang="ts">
-   import VueApexCharts from 'vue3-apexcharts';
+   import { EyeOpenIcon } from '@radix-icons/vue';
+import VueApexCharts from 'vue3-apexcharts';
   interface Props {
     data: any
   };
@@ -48,6 +52,9 @@
     legend: {
       position: 'bottom'
     },
+    grid: {
+      show: false
+    },
   }))
 
   const series = computed(() => {
@@ -55,8 +62,8 @@
       data: [{
           x: 'Overdue',
           y: props.data.overdue.length,
-          // fillColor: '#EB8C87',
-          // strokeColor: '#C23829'
+          fillColor: '#FF4560',
+          strokeColor: '#FF4560'
         }, 
         {
           x: 'Due Soon',
@@ -64,7 +71,9 @@
         }, 
         {
           x: 'Incoming',
-          y: props.data.incoming.length
+          y: props.data.incoming.length,
+          fillColor: '#00E396',
+          strokeColor: '#00E396'
         }
       ]
     }]

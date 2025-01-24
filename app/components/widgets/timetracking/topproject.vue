@@ -1,11 +1,13 @@
 <template>
-  <div>
+   <ModulesWidget
+      title="Client's Projects distribution"
+      >
     <vue-apex-charts
       :options="chartOptions"
       :series="series"
       
     />
-  </div>
+  </ModulesWidget>
 </template>
 
 <script setup lang="ts">
