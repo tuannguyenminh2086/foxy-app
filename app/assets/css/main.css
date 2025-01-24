@@ -1,0 +1,8 @@
+@import url("./chart.css");
+
+
+.apexcharts-legend-text,
+.apexcharts-text.apexcharts-xaxis-label,
+.apexcharts-xaxis-texts-g  {
+  @apply dark:!text-white
+}
