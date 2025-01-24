@@ -61,15 +61,21 @@
       <p class="text-xs text-muted-foreground">hour(s)</p>
       </ModulesWidget>
     </div>
-    <div class="col-span-2">
-      <LazyWidgetsTasksProductivityStats />
-    </div>
-    <div class="col-span-5">
+    
+    
+    <div class="col-span-6">
       <LazyWidgetsTasksDistributionByState :data="taskStateAnalysis.stateResults" />
     </div>
-    <div class="col-span-5">
+    <div class="col-span-6">
+       <LazyWidgetsTasksDueDateStats :data="dueDateAnalysis" />
+    </div>
+    <div class="col-span-6">
       <LazyWidgetsTasksAvTimeSpent :data="taskStateAnalysis.stateResults" />
     </div>
+    <div class="col-span-6">
+      <LazyWidgetsTasksProductivityStats />
+    </div>
+    
     <div class="col-span-8 flex flex-col flex-1">
       <ModulesWidget
       title="All Client's Projects distribution"
@@ -86,9 +92,7 @@
         <LazyWidgetsTimetrackingTopprojectbyhours :data="projectsAnalysis" />
       </ModulesWidget>
 
-    </div>
-
-  
+    </div>    
 
   
   </div>
@@ -98,7 +102,7 @@
 import { useOverviewStore } from '~/store/overview';
 
 const overviewStore = useOverviewStore()
-const { totalTimeSpent, totalTimeSpentOnClient, totalTimeSpentOnInternal,totalTimeSpentOnNonProjects, projectsAnalysis, taskStateAnalysis } = storeToRefs(overviewStore)
+const { totalTimeSpent, totalTimeSpentOnClient, totalTimeSpentOnInternal,totalTimeSpentOnNonProjects, projectsAnalysis, taskStateAnalysis, dueDateAnalysis } = storeToRefs(overviewStore)
 
 </script>
 
