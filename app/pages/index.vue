@@ -6,7 +6,7 @@
   </LayoutContainer>
 </template>
 
-<script>
+<script setup>
 import { useMembersStore } from '~/store/members';
 import { useOverviewStore } from '~/store/overview';
 
@@ -18,15 +18,15 @@ useHead({
   title: 'Overview'
 })
 
-export default {
-  setup () {
-    const membersStore = useMembersStore();
-    const overviewStore = useOverviewStore()
-    membersStore.fetchAll();
-    overviewStore.initialize();
-    
-  }
-}
+
+const membersStore = useMembersStore();
+const overviewStore = useOverviewStore();
+
+membersStore.fetchAll();
+overviewStore.initialize();
+
+
+
 </script>
 
 <style lang="scss" scoped>

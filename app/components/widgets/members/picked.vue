@@ -10,7 +10,7 @@
 <script setup>
   import { useOverviewStore } from '~/store/overview';
   const overviewStore = useOverviewStore()
-  const { memberPickedList } = storeToRefs(overviewStore)   
+  const { memberPickedList, selected_members } = storeToRefs(overviewStore)   
 </script>
 
 <style lang="scss" scoped>

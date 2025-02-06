@@ -4,11 +4,13 @@
     description="client's projects"
   >
     <div class="">
-      <vue-apex-charts
-        :options="options"
-        :series="series" 
-      
-      />
+      <ClientOnly>
+        <vue-apex-charts
+          :options="options"
+          :series="series" 
+        
+        />
+      </ClientOnly>
       
       <Button variant="ghost" size="icon" class="absolute top-2 right-2">
         <EyeOpenIcon class="w-4 h-4" />

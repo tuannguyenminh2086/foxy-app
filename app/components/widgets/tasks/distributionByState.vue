@@ -3,13 +3,13 @@
     title="Task Distribution"
     description="by State"
   >
-    <div class="">
+    <ClientOnly>
       <vue-apex-charts
         :options="options"
         :series="series" 
       
       />
-    </div>
+    </ClientOnly>
   </ModulesWidget>
 
 </template>

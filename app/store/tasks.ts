@@ -40,27 +40,27 @@ export const useTasksStore = defineStore('tasks', {
   },
   actions: {
     async fetchTasks () {
-      const { data } = await useFetch('/api/tasks/list')
-      if(data.value) {
-        const response:IResponse = data.value  as IResponse;
-        const _tasks = response.data
+      // const { data } = await useFetch('/api/tasks/list')
+      // if(data.value) {
+      //   const response:IResponse = data.value  as IResponse;
+      //   const _tasks = response.data
       
-        if (_tasks) {
-          let _payload:ITask[] = Object.values(_tasks)
-          // assign tasks
-          this.tasks = _payload ?? [];
-        }
+      //   if (_tasks) {
+      //     let _payload:ITask[] = Object.values(_tasks)
+      //     // assign tasks
+      //     this.tasks = _payload ?? [];
+      //   }
 
-      }
+      // }
     },
     async updateTask (tid:number, payload: any) {
-      const data = await $fetch('/api/tasks/update', {
-        method: 'post',
-        body: {
-          tid,
-          payload
-        }
-      })
+      // const data = await $fetch('/api/tasks/update', {
+      //   method: 'post',
+      //   body: {
+      //     tid,
+      //     payload
+      //   }
+      // })
 
       // console.log(data)
     }

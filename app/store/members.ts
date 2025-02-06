@@ -29,16 +29,24 @@ export const useMembersStore = defineStore('members', {
         name: member.first_name + ' ' + member.last_name
       }));
       return [allMemberItem, ...simplifiedMembers];
+    },
+    getMembers:(state) => {
+      return [...state.members]
     }
   },
   actions: {
     async fetchAll () {
-      const { data } = await useFetch('/api/members/list');
-      if(data.value) {
-        const response:IResponse<User> = data.value;
-        if (response.data) {
+      const req = await $fetch('/api/members/list');
+
+     
+      if (req && req.status == 'success') {
+        if ('data' in req) {
+          const response = req;
           const _payload = Array.isArray(response.data) ? response.data : [];
-          this.members = _payload ?? [];
+          this.members = _payload ? _payload.map(item => ({
+            ...item,
+            name: `${item.first_name} ${item.last_name}`
+          })) : [];
         }
       }
     },

@@ -21,14 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { HamburgerMenuIcon, PlayIcon } from '@radix-icons/vue';
-import { useAppStore } from '~/store/app';
-
-const appStore = useAppStore();
-
-const toggleMenu = () => {
-  appStore.toggleSidebar()
-}
+// import { HamburgerMenuIcon, PlayIcon } from '@radix-icons/vue';
 
 </script>
 
