@@ -1,11 +1,13 @@
 <template>
   <div>
-    <vue-apex-charts
-      type="bar"
-      height="180"
-      :options="chartOptions"
-      :series="series"
-    />
+    <ClientOnly>
+      <vue-apex-charts
+        type="bar"
+        height="180"
+        :options="chartOptions"
+        :series="series"
+      />
+    </ClientOnly>
   </div>
 </template>
 <script setup>

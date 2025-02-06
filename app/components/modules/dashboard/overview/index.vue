@@ -1,7 +1,7 @@
 <template>
   <!---section 2-->
 
-  <div class="grid grid-cols-12 gap-3 grid-flow-row-dense justify-items-stretch">
+  <div class="grid grid-cols-12 gap-5 grid-flow-row-dense justify-items-stretch">
     <div class="col-span-2 flex flex-col flex-1">
       <ModulesWidget
         title="Total hours"

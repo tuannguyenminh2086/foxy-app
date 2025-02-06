@@ -5,7 +5,6 @@ import { useMembersStore } from './members'
 import type { IResponse } from "~~/types/common";
 import type { TaskReport } from "~/lib/zod/report";
 import type { ProjectSummary, ProjectSummaryItem } from "~/lib/types";
-import DueDateStats from "~/components/widgets/tasks/dueDateStats.vue";
 import type { DueStatus } from "~~/types/tasks";
 
 interface OverviewState {
@@ -246,14 +245,49 @@ export const useOverviewStore = defineStore('overview', {
         throughput: completedTasks.length / 
           (filteredTasks && filteredTasks.length > 0 && filteredTasks[0] && filteredTasks[0].due_date ? Math.ceil((new Date().getTime() - new Date(filteredTasks[0].due_date).getTime()) / (1000 * 60 * 60 * 24)) : 1)
       };
+    },
+    teamAnalysis (state) {
+        
+        const groupedByMember = _.groupBy(state.raw_data, 'member');
+        const userStats = _.map(groupedByMember, (tasks, member) => {
+          const uniqueProjects = _.uniqBy(tasks, 'project_id').length;
+          const totalSpent = _.sumBy(tasks, 'total_spent');
+          
+          const clientTasks = tasks.filter(t => t.project_id && t.client_id && !state.excludedClientIds.includes(t.client_id));
+          const internalTasks = tasks.filter(t => state.excludedClientIds.includes(t.client_id));
+          const nonProjectTasks = tasks.filter(t => !t.project_id || !t.client_id);
+          
+          return {
+            name: member,
+            taskCount: tasks.length,
+            projectCount: uniqueProjects,
+            totalTimeSpent: totalSpent,
+            clientTimeSpent: _.sumBy(clientTasks, 'total_spent'),
+            nonProjectTimeSpent: _.sumBy(nonProjectTasks, 'total_spent'),
+            internalTimeSpent: _.sumBy(internalTasks, 'total_spent')
+          };
+        });
+
+
+
+      return userStats;
     }
   },
+
   actions: {
     async initialize () {
       this.start_date = dayjs().subtract(6,'day').format('YYYY-MM-DD');
       this.end_date = dayjs().subtract(1, 'day').format('YYYY-MM-DD');
-      const membersList = useMembersStore();
-      this.selected_members = membersList.members.map(member => (member.id));
+
+      const req = await $fetch('/api/members/list');
+      if (req && req.status == 'success') {
+        if ('data' in req) {
+          const response = req;
+          const _payload = Array.isArray(response.data) ? response.data : [];
+          this.selected_members = _payload ? _payload.map(item => item.id) : [];
+        }
+      }
+
     },
     pickMember (ids: Array<number>) {
       this.selected_members = [...ids];
@@ -281,10 +315,11 @@ export const useOverviewStore = defineStore('overview', {
         
       }
       
-    }
+    },
   },  
 
   persist: {
     pick: ['selected_members', 'start_date', 'end_date', 'excludedClientIds']
   }
+
 })

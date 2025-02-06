@@ -5,6 +5,7 @@ export const UserSchema = z.object({
     "first_name": z.string(),
     "id": z.number(),
     "last_name": z.string(),
+    "name": z.string(),
     "terminal_status": z.number(),
 });
 

@@ -3,12 +3,12 @@
       title="Top 5 Client's projects distribution"
       >
       <div class="space-y-10">
-        <div>
-          <vue-apex-charts
-            :options="donutChartOptions"
-            :series="donutChartSeries" 
-          />
-        </div>
+          <ClientOnly>
+            <vue-apex-charts
+              :options="donutChartOptions"
+              :series="donutChartSeries" 
+            />
+          </ClientOnly>
         <div class="grid grid-cols-2 gap-4">
           <Card  v-if="data.summary.totalProjects">
               <CardHeader>

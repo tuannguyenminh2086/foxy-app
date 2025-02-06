@@ -3,12 +3,12 @@
     title="Average Time Spent"
     description="by Task(s)"
   >
-    <div class="">
+    <ClientOnly>
       <vue-apex-charts
         :options="options"
         :series="series"
       />
-    </div>
+    </ClientOnly>
   </ModulesWidget>
 </template>
 
@@ -43,6 +43,9 @@
       bar: {
         horizontal: false,
       },
+    },
+    grid: {
+      show: false
     },
    
    

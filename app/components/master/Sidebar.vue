@@ -21,15 +21,15 @@
 </template>
 
 <script setup>
-import { BarChartIcon, DashboardIcon, HomeIcon, LayoutIcon, StackIcon } from '@radix-icons/vue';
-import { useAppStore } from '~/store/app';
-import { onClickOutside } from '@vueuse/core'
+import { DashboardIcon, LayoutIcon } from '@radix-icons/vue';
+// import { useAppStore } from '~/store/app';
+// import { onClickOutside } from '@vueuse/core'
 
-const appStore = useAppStore();
-const { isSidebarOpen } = storeToRefs(appStore)
-const target = ref(null);
+// const appStore = useAppStore();
+// const { isSidebarOpen } = storeToRefs(appStore)
+// const target = ref(null);
 
-onClickOutside(target, event => appStore.closeSidebar())
+// onClickOutside(target, event => appStore.closeSidebar())
 
 </script>
 

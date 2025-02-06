@@ -2,11 +2,12 @@
    <ModulesWidget
       title="Client's Projects distribution"
       >
-    <vue-apex-charts
-      :options="chartOptions"
-      :series="series"
-      
-    />
+      <ClientOnly>
+        <vue-apex-charts
+          :options="chartOptions"
+          :series="series"
+        />
+      </ClientOnly>
   </ModulesWidget>
 </template>
 
